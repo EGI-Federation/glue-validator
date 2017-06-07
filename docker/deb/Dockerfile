@@ -12,7 +12,7 @@ RUN apt-get -y update
 RUN apt-get -o "Dpkg::Options::=--force-confnew" -y dist-upgrade
 RUN apt-get -y --no-install-recommends install build-essential devscripts debhelper
 RUN apt-get -y --no-install-recommends install rsync
-RUN apt-get -y --no-install-recommends install python-support
+RUN apt-get -y --no-install-recommends install dh-python python-all
 
 VOLUME /output
 

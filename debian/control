@@ -5,7 +5,7 @@ Priority: optional
 Build-Depends:
      debhelper (>= 8),
      python-all,
-     python-support (>= 0.90)
+     dh-python
 Standards-Version: 3.9.3
 homepage: https://twiki.cern.ch/twiki/bin/view/EGEE/BDII
 Vcs-Browser: http://svnweb.cern.ch/world/wsvn/gridinfo/glue-validator/trunk
