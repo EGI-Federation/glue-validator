@@ -1,3 +1,9 @@
+glue-validator (2.0.25-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Baptiste Grenier <baptiste.grenier@egi.eu>  Wed, 07 Jun 2017 16:16:00 +0100
+
 glue-validator (1.0.2-1) UNRELEASED; urgency=low
 
   * Initial release.
