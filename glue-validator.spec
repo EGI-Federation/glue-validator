@@ -59,7 +59,7 @@ rm -rf %{buildroot}
 - #GRIDINFO-6: Test mandatory objects are present
 - #GRIDINFO-3: Test GLUE2ServiceAdminDomainForeignKey = GLUE2DomainID in the DN 
  
-* Wed Aug 08 2014 Maria Alandes <maria.alandes.pradillo@cern.ch> - 2.0.23-0
+* Fri Aug 08 2014 Maria Alandes <maria.alandes.pradillo@cern.ch> - 2.0.23-0
 - #GRIDINFO-52: xroot should be used when referring to the xrootd protocol
 - #GRIDINFO-51: Add new ServiceType values
 - #GRIDINFO-50: Obsolete WLCG_NAME test
