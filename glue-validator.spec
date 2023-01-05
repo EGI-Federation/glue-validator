@@ -1,22 +1,21 @@
-%if 0%{?rhel} <= 5
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%endif
-Summary: A validation framework for Grid information providers
 Name: glue-validator
 Version: 2.0.25
 Release: 0%{?dist}
-# The source for this package was pulled from upstream's vcs.  Use the
-# following commands to generate the tarball:
-#   svn export http://svnweb.cern.ch/guest/gridinfo/glue-validator/tags/R_2_0_25_0 %{name}-%{version}
-#  tar -czvf %{name}-%{version}.tar.gz %{name}-%{version}
-Source0: %{name}-%{version}.tar.gz
-License: ASL 2.0
+Summary: A validation framework for Grid information providers
 Group: Development/Libraries
-BuildRoot: %{_tmppath}/%{name}-buildroot
+License: ASL 2.0
+URL: https://github.com/EGI-Federation/glue-validator
+Source: %{name}-%{version}.tar.gz
+
 BuildArch: noarch
-BuildRequires: python-devel
+BuildRoot: %{_tmppath}/%{name}-%{version}-build
+BuildRequires: rsync
+BuildRequires: make
+BuildRequires: python
+BuildRequires: python-setuptools
+BuildRequires: python-rpm-macros
 Requires: openldap-clients
-Url: http://gridinfo.web.cern.ch/glue/glue-validator-guide
+Requires: python
 
 %description
 A validation framework for Grid information providers. 
@@ -31,22 +30,24 @@ model from the Open Grid Forum.
 
 %install
 rm -rf %{buildroot}
-%{__python} setup.py install --skip-build --root $RPM_BUILD_ROOT 
+%{__python} setup.py install --skip-build --root %{buildroot}
 mkdir -p %{buildroot}/usr/share/man/man1
-install -m 0644 man/glue-validator.1 %{buildroot}/usr/share/man/man1
+install -m 0644 man/%{name}.1 %{buildroot}/usr/share/man/man1
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
-%doc LICENSE
+%defattr(-,root,root,-)
 %{python_sitelib}/*
-%{_bindir}/glue-validator
-%{_mandir}/man1/glue-validator.1.gz
+%{_bindir}/%{name}
+%{_mandir}/man1/%{name}.1.gz
+%doc %{_docdir}/%{name}-%{version}/README.md
+%doc %{_docdir}/%{name}-%{version}/AUTHORS.md
+%license /usr/share/licenses/%{name}-%{version}/COPYRIGHT
+%license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
-
 * Fri Oct 03 2014 Maria Alandes <maria.alandes.pradillo@cern.ch> - 2.0.25-0
 - # GRIDINFO-58: Workaround for StoRM in the Domain Foreign Keys Test
 - Fix help examples that were not correct
