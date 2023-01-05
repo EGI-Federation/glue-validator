@@ -26,13 +26,10 @@ model from the Open Grid Forum.
 %setup -q
 
 %build
-%{__python} setup.py build
 
 %install
 rm -rf %{buildroot}
-%{__python} setup.py install --skip-build --root %{buildroot}
-mkdir -p %{buildroot}/usr/share/man/man1
-install -m 0644 man/%{name}.1 %{buildroot}/usr/share/man/man1
+make install python=python prefix=%{buildroot}
 
 %clean
 rm -rf %{buildroot}
