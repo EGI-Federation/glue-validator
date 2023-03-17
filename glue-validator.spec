@@ -35,7 +35,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{python_sitelib}/*
+%{python3_sitelib}/*
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1.gz
 %doc %{_docdir}/%{name}-%{version}/README.md
