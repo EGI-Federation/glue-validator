@@ -44,6 +44,7 @@ jobs:
         run: |
           curl https://repository.egi.eu/sw/production/cas/1/current/repo-files/EGI-trustanchors.repo > /etc/yum.repos.d/EGI-trustanchors.repo
           yum install -y ca-policy-egi-core
+          mkdir -p /etc/glite
           echo 'capath = /etc/grid-security/certificates' >> /etc/glite/glue-validator.conf
           glue-validator -v -c /etc/glite/glue-validator.conf
 
