@@ -8,7 +8,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [2.1.0] - 2023-03-17
+
+### Changed
+
+- Build and release packages using AlmaLinux 8 and 9. (#7) (Baptiste Grenier)
+
 ## [2.0.25] - 2014-10-03
+
 ### Fixed
+
 - Workaround for StoRM in the Domain Foreign Keys Test (GRIDINFO-58) (Maria Alandes)
 - Fix help examples that were not correct (Maria Alandes)
