@@ -11,11 +11,10 @@ BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: rsync
 BuildRequires: make
-BuildRequires: python
-BuildRequires: python-setuptools
-BuildRequires: python-rpm-macros
+BuildRequires: python3-setuptools
+BuildRequires: python3-rpm-macros
 Requires: openldap-clients
-Requires: python
+Requires: python3
 
 %description
 A validation framework for Grid information providers. 
