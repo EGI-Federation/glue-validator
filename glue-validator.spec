@@ -1,6 +1,6 @@
 Name: glue-validator
-Version: 2.0.25
-Release: 0%{?dist}
+Version: 2.1.0
+Release: 1%{?dist}
 Summary: A validation framework for Grid information providers
 Group: Development/Libraries
 License: ASL 2.0
@@ -45,6 +45,9 @@ rm -rf %{buildroot}
 %license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
+* Fri Mar 17 2023 Baptiste Grenier <baptiste.grenier@egi.eu> - 2.1.0-1
+- Build and release packages using AlmaLinux 8 and 9. (#7) (Baptiste Grenier)
+
 * Fri Oct 03 2014 Maria Alandes <maria.alandes.pradillo@cern.ch> - 2.0.25-0
 - # GRIDINFO-58: Workaround for StoRM in the Domain Foreign Keys Test
 - Fix help examples that were not correct
