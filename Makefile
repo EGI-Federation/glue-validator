@@ -39,10 +39,10 @@ prepare: dist
 	cp $(NAME).spec $(build)/SPECS
 
 srpm: prepare
-	rpmbuild -bs --define="dist $(dist)" --define='_topdir $(build)' $(build)/SPECS/$(NAME).spec
+	rpmbuild -bs --define="dist $(dist)" --define="_topdir $(build)" $(build)/SPECS/$(NAME).spec
 
 rpm: srpm
-	rpmbuild --rebuild --define="dist $(dist)" --define='_topdir $(build)' $(build)/SRPMS/$(NAME)-$(VERSION)-$(RELEASE)$(dist).src.rpm
+	rpmbuild --rebuild --define="dist $(dist)" --define="_topdir $(build)" $(build)/SRPMS/$(NAME)-$(VERSION)-$(RELEASE)$(dist).src.rpm
 
 deb: dist
 	cd $(build)/$(NAME)-$(VERSION); dpkg-buildpackage -us -uc; cd -
