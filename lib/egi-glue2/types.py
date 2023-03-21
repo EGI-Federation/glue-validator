@@ -31,19 +31,20 @@ def is_ExtendedBoolean_t( value):
       return False
    
 def is_URI( value):
-   return is_String(value)
+   # TODO: implement a more complete URL check
    # RFC 3986: http://www.ietf.org/rfc/rfc3986.txt
    # Check URL (subtype of URI)
-   uri = "^[a-zA-Z][a-zA-Z0-9+-.]*://[a-zA-Z0-9_.]+(:[0-9]+)*(/[a-zA-Z0-9_]*)*(\?[a-zA-Z0-9+-:@?./]+)?(#[a-zA-Z0-9+-:#@?./]+)?$"
-   if re.match(uri, value):
-      return True
-   else:
-      # Check other URIs
-      uri = "^[a-zA-Z][a-zA-Z0-9+-.@:]*:[a-zA-Z0-9+-.@:]*$"
-      if re.match(uri, value):
-         return True
-      else:
-         return False
+   # uri = "^[a-zA-Z][a-zA-Z0-9+-.]*://[a-zA-Z0-9_.]+(:[0-9]+)*(/[a-zA-Z0-9_]*)*(\?[a-zA-Z0-9+-:@?./]+)?(#[a-zA-Z0-9+-:#@?./]+)?$"
+   # if re.match(uri, value):
+   #    return True
+   # else:
+   #    # Check other URIs
+   #    uri = "^[a-zA-Z][a-zA-Z0-9+-.@:]*:[a-zA-Z0-9+-.@:]*$"
+   #    if re.match(uri, value):
+   #       return True
+   #    else:
+   #       return False
+   return is_String(value)
 
 def is_URL( value):
    # RFC 1738: http://www.ietf.org/rfc/rfc1738.txt
@@ -1199,4 +1200,3 @@ def is_VO_t(value):
        return True
     else:
        return False
-
