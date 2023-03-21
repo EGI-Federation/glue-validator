@@ -1,6 +1,8 @@
 import re
 import sys
+
 import glue2.data
+
 
 def is_DN_t(value):
    return is_String(value)
