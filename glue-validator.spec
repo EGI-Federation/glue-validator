@@ -6,20 +6,20 @@ Group: Development/Libraries
 License: ASL 2.0
 URL: https://github.com/EGI-Federation/glue-validator
 Source: %{name}-%{version}.tar.gz
-
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: rsync
 BuildRequires: make
+BuildRequires: python3
 BuildRequires: python3-setuptools
 BuildRequires: python3-rpm-macros
 Requires: openldap-clients
 Requires: python3
 
 %description
-A validation framework for Grid information providers. 
-This framework validates the information return against the GLUE information 
-model from the Open Grid Forum. 
+A validation framework for Grid information providers.
+This framework validates the information return against the GLUE information model from
+the Open Grid Forum.
 
 %prep
 %setup -q
@@ -28,7 +28,7 @@ model from the Open Grid Forum.
 
 %install
 rm -rf %{buildroot}
-make install python=python prefix=%{buildroot}
+make install python=python3 prefix=%{buildroot}
 
 %clean
 rm -rf %{buildroot}
