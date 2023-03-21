@@ -4,7 +4,7 @@ RELEASE=$(shell grep Release: *.spec | cut -d"%" -f1 | sed 's/^[^:]*:[^0-9]*//')
 build=$(shell pwd)/build
 DATE=$(shell date "+%a, %d %b %Y %T %z")
 dist=$(shell rpm --eval '%dist')
-python ?= python
+python ?= python3
 
 default:
 	@echo "Nothing to do"
