@@ -50,7 +50,7 @@ def is_URL( value):
    # RFC 1738: http://www.ietf.org/rfc/rfc1738.txt
    # Protocols accepted: see is_allowed_URL_Schema
    # Protocols rejected on purpose: gopher|news|nntp|telnet|mailto|file|etc.
-   url = "(?:(?:([a-z0-9+.-]+)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%_\./-~-]*)?"
+   url = "(?:(?:([a-z0-9+.-]+)://)|(www\\.))+(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(/[a-zA-Z0-9\\&amp;%_\\./-~-]*)?"
    m = re.match(url,value)
    if m is None:
       return False
