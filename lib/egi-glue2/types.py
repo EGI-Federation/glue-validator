@@ -166,20 +166,6 @@ def is_InterfaceName_t(value):
    else:
        return is_ServiceType_t(value) or is_allowed_URL_Schema(value)
 
-def is_JobDescription_t(value):
-   descriptions = [
-      'condor',
-      'egee:jdl',
-      'emies:adl',
-      'globus:rsl',
-      'nordugrid:xrsl',
-      'ogf:jsdl:1.0'
-      ]
-   if value in descriptions:
-       return True
-   else:
-       return False
-
 def is_PolicyScheme_t(value):
    schemes = ['basic', 'gacl', 'org.glite.standard']
    if value in schemes:
@@ -642,7 +628,15 @@ def is_Benchmarkabbr_t(value):
 
 
 def is_JobDescription_t(value):
-   types = [ 'condor', 'egee:jdl', 'globus:rsl', 'nordugrid:xrsl', 'ogf:jsdl:1.0', 'glite:jdl']
+   types = [
+           'condor',
+           'egee:jdl',
+           'emies:adl',
+           'globus:rsl',
+           'nordugrid:xrsl',
+           'ogf:jsdl:1.0',
+           'glite:jdl'
+           ]
    if value in types:
       return True
    else:
