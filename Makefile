@@ -50,5 +50,6 @@ deb: dist
 clean:
 	@rm -f *~ bin/*~ etc/*~ data/*~
 	@rm -rf build dist MANIFEST
+	rm -f *~ $(NAME)-$(VERSION).tar.gz
 
 .PHONY: dist srpm rpm sources deb clean
