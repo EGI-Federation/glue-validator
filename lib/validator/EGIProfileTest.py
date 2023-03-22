@@ -1595,7 +1595,7 @@ class EGIProfileTest(unittest.TestCase):
         except ValueError:
             message = ""
             status = True
-        self.asserTrue(removaldate.timetuple() < now.timetuple(), message)
+        self.assertTrue(removaldate.timetuple() < now.timetuple(), message)
 
     def test_GLUE2ApplicationEnvironmentMaxSlots_OK(self):
         message = validator.utils.message_generator(
