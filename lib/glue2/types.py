@@ -1,6 +1,11 @@
 import re
-import sys
 import glue2.data
+
+
+MAX_INT32 = 2**31 - 1
+MAX_INT64 = 2**63 - 1
+MAX_UINT32 = 2**32 - 1
+MAX_UINT64 = 2**64 - 1
 
 
 def is_DN_t(value):
@@ -105,7 +110,7 @@ def is_ContactType_t(value):
 def is_Int32(value):
     # Check http://en.wikipedia.org/wiki/Integer_(computer_science)
     if re.match("^(?:[-+])?[0-9]+$", value):
-        if -sys.maxint <= int(value) <= sys.maxint:
+        if -MAX_INT32 <= int(value) <= MAX_INT32:
             return True
         return False
 
@@ -113,7 +118,7 @@ def is_Int32(value):
 def is_UInt32(value):
     # Check http://en.wikipedia.org/wiki/Integer_(computer_science)
     if re.match("^[0-9]+$", value):
-        if int(value) <= sys.maxint:
+        if int(value) <= MAX_UINT32:
             return True
         return False
 
@@ -121,7 +126,7 @@ def is_UInt32(value):
 def is_UInt64(value):
     # Check http://en.wikipedia.org/wiki/Integer_(computer_science)
     if re.match("^[0-9]+$", value):
-        if long(value) <= 18446744073709551615:
+        if int(value) <= MAX_UINT32:
             return True
         return False
 
@@ -179,20 +184,6 @@ def is_InterfaceName_t(value):
         return True
     else:
         return is_ServiceType_t(value) or is_allowed_URL_Schema(value)
-
-
-def is_JobDescription_t(value):
-    descriptions = [
-        "condor",
-        "egee:jdl",
-        "globus:rsl",
-        "nordugrid:xrsl",
-        "ogf:jsdl:1.0",
-    ]
-    if value in descriptions:
-        return True
-    else:
-        return False
 
 
 def is_PolicyScheme_t(value):
