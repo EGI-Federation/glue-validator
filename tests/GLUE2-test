@@ -1,43 +1,49 @@
-#!/bin/bash
-#set -x
-script=../bin/glue-validator
-output=$(mktemp)
+#!/usr/bin/env bash
+# set -x
+script="../bin/glue-validator"
+output="$(mktemp)"
+failed=0
 export PYTHONPATH=../lib
 
 function test_ldif {
-    echo -n "Testing ${ldif} ... " 
-    ${script} -f $1 > ${output} 2>${output}.err
-    if [ $? -gt 0 ]; then 
-	echo "FAIL" 1>&2
-	cat ${output}
-	cat ${output}.err
-	return
-    fi
-    #if [ $(wc -l ${output} | sed 's/ .*//') -ne 2 ]; then
-#	echo "FAIL" 1>&2
-#	cat ${output}
-#	cat ${output}.err
-#	return
-#    fi
-    grep "$2" ${output}.err >/dev/null 2>&1
-    if [ $? -gt 0 ]; then 
-	echo "FAIL" 1>&2
-	cat ${output}.err
-	return
-    fi
-    echo "OK"
-}  
+	echo -n "Testing ${ldif} ... "
+	if ! ${script} -f "$1" >"${output}" 2>"${output}.err"; then
+		echo "FAIL" 1>&2
+		cat "${output}"
+		cat "${output}.err"
+		failed=1
+		return
+	fi
+	# if [ $(wc -l ${output} | sed 's/ .*//') -ne 2 ]; then
+	#   echo "FAIL" 1>&2
+	#   cat ${output}
+	#   cat ${output}.err
+	#   return
+	# fi
+	if ! grep "$2" "${output}.err" >/dev/null 2>&1; then
+		echo "FAIL" 1>&2
+		cat "${output}.err"
+		failed=1
+		return
+	fi
+	echo "OK"
+}
 
-ldif=ldif/GLUE2AdminDomain/AdminDomain.ldif
+ldif="ldif/GLUE2AdminDomain/AdminDomain.ldif"
 message="The field GLUE2DomainId with value"
-test_ldif ${ldif} "${message}"
+test_ldif "${ldif}" "${message}"
 
-ldif=ldif/GLUE2Location/Location.ldif
+ldif="ldif/GLUE2Location/Location.ldif"
 message="^"
-test_ldif ${ldif} "${message}"
+test_ldif "${ldif}" "${message}"
 
-ldif=ldif/GLUE2Contact/Contact.ldif
+ldif="ldif/GLUE2Contact/Contact.ldif"
 message="^"
-test_ldif ${ldif} "${message}"
+test_ldif "${ldif}" "${message}"
 
-rm -f ${output}
+rm -f "${output}"
+
+if [ "$failed" = "1" ]; then
+	echo "Error when running the tests"
+	exit 1
+fi
