@@ -6,6 +6,7 @@ on:
 
 jobs:
   # XXX done outside of the matrix due to different container name
+  # XXX: From EPEL: python3-ldap
   test-centos7:
     name: Run tests on CentOS 7
     runs-on: ubuntu-latest
@@ -16,7 +17,8 @@ jobs:
           fetch-depth: 0
       - name: Run tests
         run: |
-          yum install -y python3 openldap-clients
+          yum install -y epel-release
+          yum install -y python3 python3-ldap openldap-clients
           cd tests/
           ./GLUE2-test
 
@@ -34,6 +36,6 @@ jobs:
           fetch-depth: 0
       - name: Run tests
         run: |
-          yum install -y python3
+          yum install -y python3 python3-ldap openldap-clients
           cd tests/
           ./GLUE2-test
