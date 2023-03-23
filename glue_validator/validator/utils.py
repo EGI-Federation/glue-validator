@@ -337,46 +337,39 @@ def nagios_output(debug_level, file):
         summary = {}
         for line in results:
             # Process new error, warning or info block
-            if (
-                line.find("INFO START:") > -1
-                or line.find("WARNING START:") > -1
-                or line.find("ERROR START:") > -1
-            ):
-                matched = re.search(r"(INFO|WARNING|ERROR)", line)
-                if matched is not None:
-                    match_string = matched.group()
-                    count[match_string] += 1
-                    extra_line = line.replace(
-                        "AssertionError: %s START:" % match_string, " "
-                    )
-                    while extra_line.find("END") == -1:
-                        # If separator is a newline, print the DN in different
-                        # lines as well
-                        if (
-                            config["separator"] == "\n"
-                            and extra_line.find("Affected DN") > -1
-                        ):
-                            DN = extra_line.split(",")
-                            for i, element in enumerate(DN):
-                                messages[match_string].append(element)
-                                if i != len(DN) - 1:
-                                    messages[match_string].append(
-                                        "\n                  "
-                                    )
-                        else:
-                            messages[match_string].append(extra_line)
-                        old_line = extra_line
-                        extra_line = results.next()
+            matched = re.search(r"(INFO|WARNING|ERROR) START:", line)
+            if matched:
+                match_string = matched.groups()[0]
+                count[match_string] += 1
+                extra_line = line.replace("AssertionError: %s START:" % match_string, " ")
+                while extra_line.find("END") == -1:
+                    # If separator is a newline, print the DN in different
+                    # lines as well
+                    if (
+                        config["separator"] == "\n"
+                        and extra_line.find("Affected DN") > -1
+                    ):
+                        DN = extra_line.split(",")
+                        for i, element in enumerate(DN):
+                            messages[match_string].append(element)
+                            if i != len(DN) - 1:
+                                messages[match_string].append(
+                                    "\n                  "
+                                )
+                    else:
+                        messages[match_string].append(extra_line)
+                    old_line = extra_line
+                    extra_line = next(results)
 
-                    # Summary per attribute and value
-                    code = re.search(r"(I...|W...|E...)", old_line)
-                    if code is not None:
-                        code_string = code.group()
-                        if code_string in summary:
-                            summary[code_string] += 1
-                        else:
-                            summary[code_string] = 1
-                    messages[match_string].append("\n")
+                # Summary per attribute and value
+                code = re.search(r"(I...|W...|E...)", old_line)
+                if code is not None:
+                    code_string = code.group()
+                    if code_string in summary:
+                        summary[code_string] += 1
+                    else:
+                        summary[code_string] = 1
+                messages[match_string].append("\n")
 
         results.close()
         os.remove(file)
