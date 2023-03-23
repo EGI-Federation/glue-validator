@@ -15,6 +15,7 @@ BuildRequires: python3-setuptools
 BuildRequires: python3-rpm-macros
 Requires: openldap-clients
 Requires: python3
+Requires: python3-ldap
 
 %description
 A validation framework for Grid information providers
