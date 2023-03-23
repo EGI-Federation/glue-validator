@@ -102,7 +102,9 @@ def main():
             for test_name in test_names:
                 if (
                     "exclude-known-issues" in config
-                    and (test_name not in glue_validator.validator.KnownIssues.test_list)
+                    and (
+                        test_name not in glue_validator.validator.KnownIssues.test_list
+                    )
                 ) or not "exclude-known-issues" in config:
                     suite.addTest(inst(test_name, entry, glue_version))
             module = sys.modules["glue_validator.validator.EGIProfileTest"]
@@ -115,7 +117,10 @@ def main():
                 if attribute in entry:
                     if (
                         "exclude-known-issues" in config
-                        and (test_name not in glue_validator.validator.KnownIssues.test_list)
+                        and (
+                            test_name
+                            not in glue_validator.validator.KnownIssues.test_list
+                        )
                     ) or not "exclude-known-issues" in config:
                         suite.addTest(
                             inst(test_name, entry, entry[attribute], glue_version)

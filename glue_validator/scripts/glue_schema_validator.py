@@ -203,5 +203,6 @@ GLUE2GroupID: grid
         print("Test Passed! (%i/%i)" % (ok, total))
         sys.exit()
 
+
 if __name__ == "__main__":
     main()

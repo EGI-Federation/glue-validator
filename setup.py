@@ -10,6 +10,11 @@ setup(
     license="Apache 2.0",
     url="https://github.com/EGI-Federation/glue-validator",
     scripts=["bin/glue-validator"],
-    packages=["glue2", "glue1", "egi-glue2", "validator"],
-    package_dir={"": "lib"},
+    packages=["glue_validator"],
+    entry_points={
+        "console_scripts": [
+            "glue-validator=glue_validator/scripts/glue_validator:main"
+            "glue-schema-validator=glue_validator/scripts/glue_schema_validator:main"
+        ],
+    },
 )
