@@ -196,7 +196,7 @@ Other Options:
  -k --exclude-known-issues  Do not run tests for wrongly published attributes
                             due to known bugs
  -t --timeout               glue-validator runtime timeout, default 10s
- -v --verbose               Verbosity level 0-3, default 0
+ -v --verbosity             Verbosity level 0-3, default 0
  -r --separator             Defines the separator for the output messages, default \\n
                             This is only available for the verbosity level 3.
  -V --version               Prints glue-validator version
