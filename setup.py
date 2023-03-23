@@ -1,4 +1,6 @@
 from distutils.core import setup
+from setuptools import find_packages
+
 
 setup(
     name="glue-validator",
@@ -10,5 +12,5 @@ setup(
     license="Apache 2.0",
     url="https://github.com/EGI-Federation/glue-validator",
     scripts=["bin/glue-validator"],
-    packages=["glue_validator"],
+    packages=(find_packages()),
 )

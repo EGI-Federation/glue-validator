@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import sys
 
 import glue_validator.scripts.glue_validator
 
