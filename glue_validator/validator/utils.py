@@ -8,6 +8,15 @@ import datetime
 import glue_validator.validator.messages
 
 
+def get_glue_version_class(glue_version):
+    glue_version_map = {
+            "glue1": "glue_validator.glue1",
+            "glue2": "glue_validator.glue2",
+            "egi-glue2": "glue_validator.egi_glue2",
+    }
+    return glue_version_map[glue_version]
+
+
 def parse_options():
     config = {}
     config["debug"] = 0

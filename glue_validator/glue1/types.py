@@ -1,5 +1,5 @@
 import re
-import glue1.data
+import glue_validator.glue1.data
 
 
 MAX_INT32 = 2**31 - 1
@@ -17,8 +17,7 @@ def is_LocalID_t(value):
 
 
 def is_ObjectClass(value):
-
-    if value in glue1.data.schema:
+    if value in glue_validator.glue1.data.schema:
         return True
     else:
         return False
