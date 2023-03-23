@@ -19,6 +19,12 @@ class WLCGTest(unittest.TestCase):
         self.value = value
 
     # ----------------------------------------------------------------------------------------------
+    def get_low_high(self):
+        low = int(self.value[0]) - (int(self.value[0]) * 0.005)
+        low = low - 1
+        high = int(self.value[0]) + (int(self.value[0]) * 0.005)
+        high = high + 1
+        return low, high
 
     def test_GLUE2StorageShareCapacityTotalSize_OK(self):
         total = 0
@@ -43,10 +49,7 @@ class WLCGTest(unittest.TestCase):
                     share_stats = share_stats + " %s=%s" % (share, self.entry[share][0])
             else:
                 share_stats = share_stats + " %s=Not published" % (share)
-        low = int(self.value[0]) - (int(self.value[0]) * 0.005)
-        low = low - 1
-        high = int(self.value[0]) + (int(self.value[0]) * 0.005)
-        high = high + 1
+        low, high = self.get_low_high()
         share_stats = share_stats + "; %s <= %s <= %s; Difference is %s" % (
             low,
             total,
@@ -79,10 +82,7 @@ class WLCGTest(unittest.TestCase):
                 cap_stats = cap_stats + " %s=%s" % (cap, self.entry[cap][0])
             else:
                 cap_stats = cap_stats + " %s=Not published" % (cap)
-        low = int(self.value[0]) - (int(self.value[0]) * 0.005)
-        low = low - 1
-        high = int(self.value[0]) + (int(self.value[0]) * 0.005)
-        high = high + 1
+        low, high = self.get_low_high()
         cap_stats = cap_stats + " %s <= %s <= %s; Difference is %s" % (
             low,
             total,

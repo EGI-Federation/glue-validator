@@ -55,58 +55,47 @@ def main():
         )
         for test_name in test_names:
             suite.addTest(inst(test_name, ldif_dict))
+
+    test_config = {
+        "general": (
+            "EntryTest",
+            glue_validator.validator.EntryTest.EntryTest,
+            glue_validator.validator.utils.get_glue_version_class(
+                config["glue-version"]
+            ),
+        ),
+        "wlcg": (
+            "WLCGTest",
+            glue_validator.validator.WLCGTest.WLCGTest,
+            glue_validator.validator.utils.get_glue_version_class(
+                config["glue-version"]
+            ),
+        ),
+        "lhcb": (
+            "lchbTest",
+            glue_validator.validator.lhcbTest.lhcbTest,
+            glue_validator.validator.utils.get_glue_version_class(
+                config["glue-version"]
+            ),
+        ),
+        "egi-glue2": (
+            "EntryTest",
+            glue_validator.validator.EntryTest.EntryTest,
+            glue_validator.validator.utils.get_glue_version_class("egi-glue2"),
+        ),
+    }
     for dn in ldif_dict:
         entry = ldif_dict[dn]
-        if config["testsuite"] == "general":
-            module = sys.modules["glue_validator.validator.EntryTest"]
-            inst = getattr(module, "EntryTest")
-            test_names = unittest.TestLoader().getTestCaseNames(
-                glue_validator.validator.EntryTest.EntryTest
-            )
-            glue_version = glue_validator.validator.utils.get_glue_version_class(
-                config["glue-version"]
-            )
-            for test_name in test_names:
-                suite.addTest(inst(test_name, entry, glue_version))
-        elif config["testsuite"] == "wlcg":
-            module = sys.modules["glue_validator.validator.WLCGTest"]
-            inst = getattr(module, "WLCGTest")
-            test_names = unittest.TestLoader().getTestCaseNames(
-                glue_validator.validator.WLCGTest.WLCGTest
-            )
-            glue_version = glue_validator.validator.utils.get_glue_version_class(
-                config["glue-version"]
-            )
-            for test_name in test_names:
-                attribute = test_name.rsplit("_")[1]
-                if attribute in entry:
-                    suite.addTest(
-                        inst(test_name, entry, entry[attribute], glue_version)
-                    )
-        elif config["testsuite"] == "lhcb":
-            module = sys.modules["glue_validator.validator.lhcbTest"]
-            inst = getattr(module, "lhcbTest")
-            test_names = unittest.TestLoader().getTestCaseNames(
-                glue_validator.validator.lhcbTest.lhcbTest
-            )
-            glue_version = glue_validator.validator.utils.get_glue_version_class(
-                config["glue-version"]
-            )
-            for test_name in test_names:
-                attribute = test_name.rsplit("_")[1]
-                if attribute in entry:
-                    suite.addTest(
-                        inst(test_name, entry, entry[attribute], glue_version)
-                    )
-        elif config["testsuite"] == "egi-profile":
-            module = sys.modules["glue_validator.validator.EntryTest"]
-            inst = getattr(module, "EntryTest")
-            test_names = unittest.TestLoader().getTestCaseNames(
-                glue_validator.validator.EntryTest.EntryTest
-            )
-            glue_version = glue_validator.validator.utils.get_glue_version_class(
-                "egi-glue2"
-            )
+        module_name = (
+            "glue_validator.validator.%s" % test_config[config["testsuite"]][0]
+        )
+        module = sys.modules[module_name]
+        inst = getattr(module, test_config[config["testsuite"]][0])
+        test_names = unittest.TestLoader().getTestCaseNames(
+            test_config[config["testsuite"]][1]
+        )
+        glue_version = test_config[config["testsuite"]][2]
+        if config["testsuite"] in ("general", "egi-profile"):
             for test_name in test_names:
                 if (
                     "exclude-known-issues" in config
@@ -115,6 +104,15 @@ def main():
                     )
                 ) or "exclude-known-issues" not in config:
                     suite.addTest(inst(test_name, entry, glue_version))
+        if config["testsuite"] in ("wlcg", "lhcb"):
+            for test_name in test_names:
+                attribute = test_name.rsplit("_")[1]
+                if attribute in entry:
+                    suite.addTest(
+                        inst(test_name, entry, entry[attribute], glue_version)
+                    )
+        if config["testsuite"] == "egi-profile":
+            # egi-profile has a 2 set of tests
             module = sys.modules["glue_validator.validator.EGIProfileTest"]
             inst = getattr(module, "EGIProfileTest")
             test_names = unittest.TestLoader().getTestCaseNames(
