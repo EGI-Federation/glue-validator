@@ -131,8 +131,8 @@ def test_ldif(entry):
         return False
 
 
-if __name__ == "__main__":
-    config = validator.utils.parse_options()
+def main():
+    config = glue_validator.validator.utils.parse_options()
     log = logging.getLogger(sys.argv[0])
     hdlr = logging.StreamHandler(sys.stderr)
     formatter = logging.Formatter("[%(levelname)s]: %(message)s")
@@ -145,8 +145,8 @@ if __name__ == "__main__":
     if "host" in config:
         source = "ldap://%s:%s/%s" % (config["host"], config["port"], config["bind"])
 
-    ldif = validator.utils.fast_read_ldif(source)
-    dns = validator.utils.get_dns(ldif)
+    ldif = glue_validator.validator.utils.fast_read_ldif(source)
+    dns = glue_validator.validator.utils.get_dns(ldif)
 
     ordered_dns = dns.keys()
     ordered_dns.sort(lambda x, y: cmp(len(x), len(y)))
@@ -173,7 +173,7 @@ GLUE2GroupID: grid
     for dn in defaults:
         if dn.lower() in ordered_dns:
             entry = ldif[dns[dn.lower()][0] : dns[dn.lower()][1]].strip()
-            entry = validator.utils.convert_entry(entry)
+            entry = glue_validator.validator.utils.convert_entry(entry)
             total += 1
             result = test_ldif(entry)
             if result:
@@ -183,12 +183,12 @@ GLUE2GroupID: grid
             ordered_dns.remove(dn.lower())
 
         else:
-            entry = validator.utils.convert_entry(defaults[dn])
+            entry = glue_validator.validator.utils.convert_entry(defaults[dn])
             result = test_ldif(entry)
 
     for dn in ordered_dns:
         entry = ldif[dns[dn][0] : dns[dn][1]].strip()
-        entry = validator.utils.convert_entry(entry)
+        entry = glue_validator.validator.utils.convert_entry(entry)
         total += 1
         result = test_ldif(entry)
         if result:
@@ -202,3 +202,6 @@ GLUE2GroupID: grid
     else:
         print("Test Passed! (%i/%i)" % (ok, total))
         sys.exit()
+
+if __name__ == "__main__":
+    main()
