@@ -341,7 +341,9 @@ def nagios_output(debug_level, file):
             if matched:
                 match_string = matched.groups()[0]
                 count[match_string] += 1
-                extra_line = line.replace("AssertionError: %s START:" % match_string, " ")
+                extra_line = line.replace(
+                    "AssertionError: %s START:" % match_string, " "
+                )
                 while extra_line.find("END") == -1:
                     # If separator is a newline, print the DN in different
                     # lines as well
@@ -353,9 +355,7 @@ def nagios_output(debug_level, file):
                         for i, element in enumerate(DN):
                             messages[match_string].append(element)
                             if i != len(DN) - 1:
-                                messages[match_string].append(
-                                    "\n                  "
-                                )
+                                messages[match_string].append("\n                  ")
                     else:
                         messages[match_string].append(extra_line)
                     old_line = extra_line
