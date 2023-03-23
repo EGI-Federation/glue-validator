@@ -78,7 +78,7 @@ def main():
                 config["glue-version"]
             ),
         ),
-        "egi-glue2": (
+        "egi-profile": (
             "EntryTest",
             glue_validator.validator.EntryTest.EntryTest,
             glue_validator.validator.utils.get_glue_version_class("egi-glue2"),
