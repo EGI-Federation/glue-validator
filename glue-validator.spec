@@ -17,7 +17,6 @@ Requires: openldap-clients
 Requires: python3
 
 %description
-A validation framework for Grid information providers.
 This framework validates the information return against the GLUE information model from
 the Open Grid Forum.
 
