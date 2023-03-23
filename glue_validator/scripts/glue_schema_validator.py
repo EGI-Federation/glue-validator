@@ -145,7 +145,7 @@ def main():
     if "host" in config:
         source = "ldap://%s:%s/%s" % (config["host"], config["port"], config["bind"])
 
-    ldif = glue_validator.validator.utils.fast_read_ldif(source)
+    ldif = glue_validator.validator.utils.fast_read_ldif(source, config["timeout"])
     dns = glue_validator.validator.utils.get_dns(ldif)
 
     ordered_dns = dns.keys()
