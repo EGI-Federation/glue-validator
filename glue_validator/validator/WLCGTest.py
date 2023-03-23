@@ -1,3 +1,4 @@
+import importlib
 import re
 import unittest
 import datetime
@@ -15,7 +16,7 @@ class WLCGTest(unittest.TestCase):
         else:
             self.dn = None
 
-        self.types = __import__("%s.types" % (test_class,)).types
+        self.types = importlib.import_module("%s.types" % (test_class,))
 
         self.value = value
 

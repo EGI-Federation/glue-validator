@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 import tempfile
+import unittest
 
 import glue_validator.validator.EGIProfileTest
 import glue_validator.validator.EntryTest
@@ -63,7 +64,7 @@ def main():
             test_names = unittest.TestLoader().getTestCaseNames(
                 glue_validator.validator.EntryTest.EntryTest
             )
-            glue_version = glue_validator.validator.utils.glue_version_class(config["glue-version"])
+            glue_version = glue_validator.validator.utils.get_glue_version_class(config["glue-version"])
             for test_name in test_names:
                 suite.addTest(inst(test_name, entry, glue_version))
         elif config["testsuite"] == "wlcg":
@@ -72,7 +73,7 @@ def main():
             test_names = unittest.TestLoader().getTestCaseNames(
                 glue_validator.validator.WLCGTest.WLCGTest
             )
-            glue_version = glue_validator.validator.utils.glue_version_class(config["glue-version"])
+            glue_version = glue_validator.validator.utils.get_glue_version_class(config["glue-version"])
             for test_name in test_names:
                 attribute = test_name.rsplit("_")[1]
                 if attribute in entry:
@@ -85,7 +86,7 @@ def main():
             test_names = unittest.TestLoader().getTestCaseNames(
                 glue_validator.validator.lhcbTest.lhcbTest
             )
-            glue_version = glue_validator.validator.utils.glue_version_class(config["glue-version"])
+            glue_version = glue_validator.validator.utils.get_glue_version_class(config["glue-version"])
             for test_name in test_names:
                 attribute = test_name.rsplit("_")[1]
                 if attribute in entry:
@@ -98,7 +99,7 @@ def main():
             test_names = unittest.TestLoader().getTestCaseNames(
                 glue_validator.validator.EntryTest.EntryTest
             )
-            glue_version = glue_validator.validator.utils.glue_version_class("egi-glue2")
+            glue_version = glue_validator.validator.utils.get_glue_version_class("egi-glue2")
             for test_name in test_names:
                 if (
                     "exclude-known-issues" in config

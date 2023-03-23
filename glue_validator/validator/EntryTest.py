@@ -1,3 +1,4 @@
+import importlib
 import re
 import unittest
 from glue_validator.validator.utils import message_generator
@@ -18,8 +19,8 @@ class EntryTest(unittest.TestCase):
             self.objects = []
 
         self.test_class = test_class
-        self.schema = __import__("%s.data" % (test_class,)).data.schema
-        self.types = __import__("%s.types" % (test_class,)).types
+        self.schema = importlib.import_module("%s.data" % (test_class,)).schema
+        self.types = importlib.import_module("%s.types" % (test_class,))
 
     def test_object_class(self):
         """Verifying the object class"""
