@@ -26,8 +26,8 @@ The required build dependencies are:
 - rpm-build
 - make
 - rsync
-- python
-- python-setuptools
+- python3
+- python3-setuptools
 
 ```shell
 # Checkout tag to package
