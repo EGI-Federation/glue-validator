@@ -16,9 +16,9 @@ Middleware Distribution.
 
 ## Building packages
 
-A Makefile allowing to build source tarball and packages is provided.
+The [Makefile](Makefile) allows building source tarball and packages.
 
-### Building a RPM
+### Building an RPM
 
 The required build dependencies are:
 
@@ -29,7 +29,7 @@ The required build dependencies are:
 - python-setuptools
 
 ```shell
-# Checkout tag to be packaged
+# Checkout tag to package
 $ git clone https://github.com/EGI-Foundation/glue-validator.git
 $ cd glue-validator
 $ git checkout X.X.X
@@ -45,11 +45,10 @@ The RPM will be available into the `build/RPMS` directory.
 
 ## Installing from source
 
-This procedure is not recommended for production deployment, please consider
-using packages.
+This procedure is not for production deployment, please consider using packages.
 
-* Build dependencies: None
-* Runtime dependencies: openldap, python
+- Build dependencies: None
+- Runtime dependencies: openldap, python3.
 
 Get the source by cloning this repository and do a `make install`.
 
@@ -60,11 +59,11 @@ Get the source by cloning this repository and do a `make install`.
   - Updating version and changelog in
     - [CHANGELOG](CHANGELOG)
     - [glue-validator.spec](glue-validator.spec)
-- Once the PR has been merged tag and release a new version in GitHub
-  - Packages will be built using GitHub Actions and attached to the release page
+- Merge the PR, then tag and release a new version
+  - GitHub Actions build and attach packages to the release page
 
 ## History
 
-This work started under the EGEE project, and was hosted and maintained for a
-long time by CERN. This is now hosted here on GitHub, maintained by the BDII
-community with support of members of the EGI Federation.
+This work started under the EGEE project, and CERN hosted and maintained it for a long
+time. This is now hosted here on GitHub, maintained by the BDII community with support of
+members of the EGI Federation.
