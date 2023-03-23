@@ -140,9 +140,9 @@ if __name__ == "__main__":
     log.addHandler(hdlr)
     log.setLevel(config["debug"])
 
-    if config.has_key("file"):
+    if "file" in config:
         source = "file://%s" % (config["file"])
-    if config.has_key("host"):
+    if "host" in config:
         source = "ldap://%s:%s/%s" % (config["host"], config["port"], config["bind"])
 
     ldif = validator.utils.fast_read_ldif(source)

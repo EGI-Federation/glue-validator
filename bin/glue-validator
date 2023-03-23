@@ -24,14 +24,14 @@ if __name__ == "__main__":
     log.addHandler(hdlr)
     log.setLevel(config["debug"])
 
-    if config.has_key("file"):
+    if "file" in config:
         if os.path.exists(config["file"]):
             source = "file://%s" % (config["file"])
         else:
             sys.stdout.write("UNKNOWN: File %s does not exist\n" % (config["file"],))
             sys.exit(3)
 
-    if config.has_key("hostname"):
+    if "hostname" in config:
         source = "ldap://%s:%s/%s" % (
             config["hostname"],
             config["port"],
@@ -103,9 +103,9 @@ if __name__ == "__main__":
             glue_version = "egi-glue2"
             for test_name in test_names:
                 if (
-                    config.has_key("exclude-known-issues")
+                    "exclude-known-issues" in config
                     and (test_name not in validator.KnownIssues.test_list)
-                ) or not config.has_key("exclude-known-issues"):
+                ) or not "exclude-known-issues" in config:
                     suite.addTest(inst(test_name, entry, glue_version))
             module = sys.modules["validator.EGIProfileTest"]
             inst = getattr(module, "EGIProfileTest")
@@ -116,19 +116,19 @@ if __name__ == "__main__":
                 attribute = test_name.rsplit("_")[1]
                 if attribute in entry:
                     if (
-                        config.has_key("exclude-known-issues")
+                        "exclude-known-issues" in config
                         and (test_name not in validator.KnownIssues.test_list)
-                    ) or not config.has_key("exclude-known-issues"):
+                    ) or not "exclude-known-issues" in config:
                         suite.addTest(
                             inst(test_name, entry, entry[attribute], glue_version)
                         )
 
-    if config.has_key("nagios"):
+    if "nagios" in config:
         auxfile = tempfile.mkstemp()
         fh = open(auxfile[1], "w")
         unittest.TextTestRunner(stream=fh, verbosity=2).run(suite)
         fh.close()
-        if config.has_key("verbosity"):
+        if "verbosity" in config:
             debug_level = int(config["verbosity"])
         else:
             debug_level = 0

@@ -71,39 +71,39 @@ def parse_options():
             usage()
             sys.exit()
 
-    if not (config.has_key("hostname") or config.has_key("file")):
+    if not ("hostname" in config or "file" in config):
         sys.stderr.write("Error: Must specify a hostname or file\n")
         usage()
         sys.exit(1)
 
-    if config.has_key("hostname") and config.has_key("file"):
+    if "hostname" in config and "file" in config:
         sys.stderr.write("Error: Must specify either hostname or file\n")
         usage()
         sys.exit(1)
 
-    if config.has_key("hostname") and not config.has_key("port"):
+    if "hostname" in config and not ("port" in config):
         sys.stderr.write("Error: Must specify a port\n")
         usage()
         sys.exit(1)
 
-    if config.has_key("hostname") and not (config.has_key("bind")):
+    if "hostname" in config and not ("bind" in config):
         sys.stderr.write("Error: Must specify a bind\n")
         usage()
         sys.exit(1)
 
-    if config.has_key("verbosity"):
+    if "verbosity" in config:
         config["verbosity"] = int(config["verbosity"])
         if config["verbosity"] > 3:
             sys.stderr.write("Error: Invalid logging level\n")
             usage()
             sys.exit(1)
 
-    if (config.has_key("port") or config.has_key("bind")) and config.has_key("file"):
+    if ("port" in config or "bind" in config) and "file" in config:
         sys.stderr.write("Error: (port/bind) options are needed by hostname only\n")
         usage()
         sys.exit(1)
 
-    if config.has_key("glue-version"):
+    if "glue-version" in config:
         if not config["glue-version"] in ["glue2", "glue1", "egi-glue2"]:
             sys.stderr.write(
                 "Error: Invalid schema version %s.\n" % (config["glue-version"],)
@@ -113,7 +113,7 @@ def parse_options():
     else:
         config["glue-version"] = "egi-glue2"
 
-    if config.has_key("testsuite"):
+    if "testsuite" in config:
         if not config["testsuite"] in ["general", "wlcg", "egi-profile", "lhcb"]:
             sys.stderr.write(
                 "Error: Invalid testsuite type %s.\n" % (config["testsuite"],)
@@ -123,7 +123,7 @@ def parse_options():
     else:
         config["testsuite"] = "egi-profile"
 
-    if not config.has_key("timeout"):
+    if not "timeout" in config:
         config["timeout"] = 10
     else:
         if config["timeout"].isdigit():
@@ -142,9 +142,9 @@ def parse_options():
         )
         usage()
         sys.exit(1)
-    if (config["separator"] != "\n" and not config.has_key("verbosity")) or (
+    if (config["separator"] != "\n" and not "verbosity" in config) or (
         config["separator"] != "\n"
-        and config.has_key("verbosity")
+        and "verbosity" in config
         and config["verbosity"] != 3
     ):
         sys.stderr.write(
@@ -309,7 +309,7 @@ def convert_entry(entry_string):
         if index > -1:
             attribute = line[:index]
             value = line[index + 2 :]
-            if entry.has_key(attribute):
+            if attribute in entry:
                 entry[attribute].append(value)
             else:
                 entry[attribute] = [value]
