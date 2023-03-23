@@ -2,7 +2,7 @@ import re
 import unittest
 import datetime
 import time
-import validator.utils
+from glue_validator.validator.utils import message_generator
 
 # ----------------------------------------------------------------------------------------------
 class lhcbTest(unittest.TestCase):
@@ -22,7 +22,7 @@ class lhcbTest(unittest.TestCase):
     # ----------------------------------------------------------------------------------------------
 
     def test_GLUE2ComputingShareMaxCPUTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I029", self.dn, "GLUE2ComputingShareMaxCPUTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)

@@ -1,5 +1,5 @@
 import unittest
-import validator.utils
+from glue_validator.validator.utils import message_generator
 
 
 class ObjectTest(unittest.TestCase):
@@ -18,7 +18,7 @@ class ObjectTest(unittest.TestCase):
             status = True
             message = ""
             if "GLUE2Domain" in self.objects and "GLUE2Location" not in self.objects:
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -27,7 +27,7 @@ class ObjectTest(unittest.TestCase):
                 )
                 status = False
             if "GLUE2Domain" in self.objects and "GLUE2Contact" not in self.objects:
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -39,7 +39,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2ComputingService" in self.objects
                 and "GLUE2Service" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -51,7 +51,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2StorageService" in self.objects
                 and "GLUE2Service" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -63,7 +63,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2ComputingEndpoint" in self.objects
                 and "GLUE2Endpoint" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -75,7 +75,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2StorageEndpoint" in self.objects
                 and "GLUE2Endpoint" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -87,7 +87,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2ComputingShare" in self.objects
                 and "GLUE2Share" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -96,7 +96,7 @@ class ObjectTest(unittest.TestCase):
                 )
                 status = False
             if "GLUE2StorageShare" in self.objects and "GLUE2Share" not in self.objects:
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -108,7 +108,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2Share" in self.objects
                 and "GLUE2MappingPolicy" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -120,7 +120,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2Endpoint" in self.objects
                 and "GLUE2AccessPolicy" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -132,7 +132,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2ComputingService" in self.objects
                 and "GLUE2ComputingManager" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -144,7 +144,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2ComputingManager" in self.objects
                 and "GLUE2ExecutionEnvironment" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -154,13 +154,13 @@ class ObjectTest(unittest.TestCase):
                 status = False
                 # Known issue affecting DPM fixed in version 1.8.8 but still affecting many sites
                 # if  'GLUE2StorageServiceCapacity' in self.objects and 'GLUE2StorageService' not in self.objects:
-                #    message = message + validator.utils.message_generator("ERROR","E025","NA",'GLUE2StorageServiceCapacity published','GLUE2StorageService missing')
+                #    message = message + message_generator("ERROR","E025","NA",'GLUE2StorageServiceCapacity published','GLUE2StorageService missing')
                 status = False
             if (
                 "GLUE2StorageShareCapacity" in self.objects
                 and "GLUE2StorageShare" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",
@@ -172,7 +172,7 @@ class ObjectTest(unittest.TestCase):
                 "GLUE2StorageService" in self.objects
                 and "GLUE2StorageAccessProtocol" not in self.objects
             ):
-                message = message + validator.utils.message_generator(
+                message = message + message_generator(
                     "ERROR",
                     "E025",
                     "NA",

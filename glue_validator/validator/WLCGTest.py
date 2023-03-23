@@ -2,7 +2,7 @@ import re
 import unittest
 import datetime
 import time
-import validator.utils
+from glue_validator.validator.utils import message_generator
 
 # ----------------------------------------------------------------------------------------------
 class WLCGTest(unittest.TestCase):
@@ -54,7 +54,7 @@ class WLCGTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR",
             "E018",
             self.dn,
@@ -90,7 +90,7 @@ class WLCGTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR",
             "E014",
             self.dn,

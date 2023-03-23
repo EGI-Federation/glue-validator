@@ -1,6 +1,6 @@
 import re
 import unittest
-import validator.utils
+from glue_validator.validator.utils import message_generator
 
 
 class EntryTest(unittest.TestCase):
@@ -30,7 +30,7 @@ class EntryTest(unittest.TestCase):
             message = ""
             for obj in self.entry["objectClass"]:
                 if not self.types.is_ObjectClass(obj):
-                    message = message + validator.utils.message_generator(
+                    message = message + message_generator(
                         "ERROR", "E021", self.dn, "NA", obj
                     )
                     status = False
@@ -48,7 +48,7 @@ class EntryTest(unittest.TestCase):
                         and attribute not in self.entry
                         and "GLUE2GroupName" not in self.entry
                     ):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "WARNING", "W034", self.dn, attribute, "NA"
                         )
                         status = False
@@ -57,7 +57,7 @@ class EntryTest(unittest.TestCase):
                         and self.schema[obj][attribute][2]
                         and attribute not in self.entry
                     ):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "WARNING", "W034", self.dn, attribute, "NA"
                         )
                         status = False
@@ -67,7 +67,7 @@ class EntryTest(unittest.TestCase):
                             self.schema[obj][attribute][2] == "Mandatory"
                             and attribute not in self.entry
                         ):
-                            message = message + validator.utils.message_generator(
+                            message = message + message_generator(
                                 "WARNING", "W034", self.dn, attribute, "NA"
                             )
                             status = False
@@ -75,7 +75,7 @@ class EntryTest(unittest.TestCase):
                             self.schema[obj][attribute][2] == "Recommended"
                             and attribute not in self.entry
                         ):
-                            message = message + validator.utils.message_generator(
+                            message = message + message_generator(
                                 "INFO", "I095", self.dn, attribute, "NA"
                             )
                             status = False
@@ -83,7 +83,7 @@ class EntryTest(unittest.TestCase):
                             self.schema[obj][attribute][2] == "Undesirable"
                             and attribute in self.entry
                         ):
-                            message = message + validator.utils.message_generator(
+                            message = message + message_generator(
                                 "WARNING", "W034", self.dn, attribute, "NA"
                             )
                             status = False
@@ -101,7 +101,7 @@ class EntryTest(unittest.TestCase):
                         and attribute in self.entry
                         and len(self.entry[attribute]) > 1
                     ):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "WARNING", "W036", self.dn, attribute, self.entry[attribute]
                         )
                         status = False
@@ -122,7 +122,7 @@ class EntryTest(unittest.TestCase):
                         for value in self.entry[attribute]:
                             check = getattr(self.types, "is_" + data_type)
                             if not check(value):
-                                message = message + validator.utils.message_generator(
+                                message = message + message_generator(
                                     "WARNING",
                                     "W037",
                                     self.dn,
@@ -143,7 +143,7 @@ class EntryTest(unittest.TestCase):
                     if attribute in self.schema[obj]:
                         for value in self.entry[attribute]:
                             if value == "":
-                                message = message + validator.utils.message_generator(
+                                message = message + message_generator(
                                     "WARNING", "W038", self.dn, attribute, "empty!"
                                 )
 

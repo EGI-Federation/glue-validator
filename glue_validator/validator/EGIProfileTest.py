@@ -2,7 +2,7 @@ import re
 import unittest
 import datetime
 import time
-import validator.utils
+from glue_validator.validator.utils import message_generator
 
 # ----------------------------------------------------------------------------------------------
 
@@ -32,12 +32,12 @@ class EGIProfileTest(unittest.TestCase):
             margin = datetime.timedelta(seconds=120)
             year = datetime.timedelta(days=730)
             if creationtime.timetuple() > (now + margin).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "ERROR", "E001", self.dn, "GLUE2EntityCreationTime", self.value[0]
                 )
                 status = False
             elif creationtime.timetuple() < (now - year).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING", "W001", self.dn, "GLUE2EntityCreationTime", self.value[0]
                 )
                 status = False
@@ -52,7 +52,7 @@ class EGIProfileTest(unittest.TestCase):
     def test_GLUE2EntityValidity_OK(self):
         if "GLUE2EntityCreationTime" not in self.entry:
             status = False
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING", "W002", self.dn, "GLUE2EntityValidity", "NA"
             )
         else:
@@ -73,7 +73,7 @@ class EGIProfileTest(unittest.TestCase):
                 # ARC validity bug.
                 due_time = (creationtime + validity).timetuple()
                 if due_time < now.timetuple():
-                    message = validator.utils.message_generator(
+                    message = message_generator(
                         "ERROR",
                         "E002",
                         self.dn,
@@ -105,7 +105,7 @@ class EGIProfileTest(unittest.TestCase):
                 val = pair[index + 1 :]
                 if att == "ProfileName":
                     if val != "EGI":
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "WARNING",
                             "W003",
                             self.dn,
@@ -115,7 +115,7 @@ class EGIProfileTest(unittest.TestCase):
                         status = False
                 if att == "ProfileVersion":
                     if not self.types.is_String(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "WARNING",
                             "W004",
                             self.dn,
@@ -125,19 +125,19 @@ class EGIProfileTest(unittest.TestCase):
                         status = False
                 elif att == "GRID":
                     if not self.types.is_Grid_t(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO", "I001", self.dn, "GLUE2EntityOtherInfo: GRID", val
                         )
                         status = False
                 elif att == "CONFIG":
                     if not self.types.is_Config_t(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO", "I002", self.dn, "GLUE2EntityOtherInfo: CONFIG", val
                         )
                         status = False
                 elif att == "EGI_NGI":
                     if not self.types.is_EGIngi_t(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO",
                             "I003",
                             self.dn,
@@ -147,19 +147,19 @@ class EGIProfileTest(unittest.TestCase):
                         status = False
                 elif att == "BLOG":
                     if not self.types.is_URL(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO", "I004", self.dn, "GLUE2EntityOtherInfo: BLOG", val
                         )
                         status = False
                 elif att == "ICON":
                     if not self.types.is_URL(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO", "I005", self.dn, "GLUE2EntityOtherInfo: ICON", val
                         )
                         status = False
                 elif att == "WLCG_TIER":
                     if not self.types.is_Tier_t(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO",
                             "I006",
                             self.dn,
@@ -171,12 +171,12 @@ class EGIProfileTest(unittest.TestCase):
                 # elif att == 'WLCG_NAME' or att == 'WLCG_PARENT':
                 #    if not self.types.is_WLCGname_t(val):
                 #        message = message + \
-                #                  validator.utils.message_generator("INFO","I007",self.dn,\
+                #                  message_generator("INFO","I007",self.dn,\
                 #                  "GLUE2EntityOtherInfo: WLCG_NAME",val)
                 #        status = False
                 elif att == "WLCG_NAMEICON":
                     if not self.types.is_URL(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO",
                             "I008",
                             self.dn,
@@ -186,7 +186,7 @@ class EGIProfileTest(unittest.TestCase):
                         status = False
                 elif att == "MiddlewareName":
                     if not self.types.is_Middleware_t(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO",
                             "I009",
                             self.dn,
@@ -196,7 +196,7 @@ class EGIProfileTest(unittest.TestCase):
                         status = False
                 elif att == "MiddlewareVersion":
                     if not self.types.is_String(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO",
                             "I010",
                             self.dn,
@@ -206,7 +206,7 @@ class EGIProfileTest(unittest.TestCase):
                         status = False
                 elif att == "HostDN":
                     if not self.types.is_DN_t(val):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO", "I011", self.dn, "GLUE2EntityOtherInfo: HostDN", val
                         )
                         status = False
@@ -216,7 +216,7 @@ class EGIProfileTest(unittest.TestCase):
                         voname = val[:index2]
                         percentage = val[index2 + 1 :]
                         if not self.types.is_VO_t(voname):
-                            message = message + validator.utils.message_generator(
+                            message = message + message_generator(
                                 "INFO",
                                 "I012",
                                 self.dn,
@@ -226,7 +226,7 @@ class EGIProfileTest(unittest.TestCase):
                             status = False
                         elif voname not in sharedict:
                             if (int(percentage) < 0) or (int(percentage) > 100):
-                                message = message + validator.utils.message_generator(
+                                message = message + message_generator(
                                     "ERROR",
                                     "E003",
                                     self.dn,
@@ -236,7 +236,7 @@ class EGIProfileTest(unittest.TestCase):
                                 status = False
                             sharedict[voname] = int(percentage)
                         else:
-                            message = message + validator.utils.message_generator(
+                            message = message + message_generator(
                                 "ERROR",
                                 "E004",
                                 self.dn,
@@ -245,7 +245,7 @@ class EGIProfileTest(unittest.TestCase):
                             )
                             status = False
                     else:
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "ERROR", "E005", self.dn, "GLUE2EntityOtherInfo: Share", val
                         )
                         status = False
@@ -253,7 +253,7 @@ class EGIProfileTest(unittest.TestCase):
                     if not self.types.is_Benchmarkabbr_t(
                         att.split("CPUScalingReference")[1]
                     ):
-                        message = message + validator.utils.message_generator(
+                        message = message + message_generator(
                             "INFO",
                             "I013",
                             self.dn,
@@ -265,7 +265,7 @@ class EGIProfileTest(unittest.TestCase):
         for i in sharedict:
             totalshare = totalshare + sharedict[i]
         if totalshare > 100:
-            message = message + validator.utils.message_generator(
+            message = message + message_generator(
                 "ERROR", "E007", self.dn, "GLUE2EntityOtherInfo: Share", totalshare
             )
             status = False
@@ -278,7 +278,7 @@ class EGIProfileTest(unittest.TestCase):
         m = re.search(substring, self.dn)
         domain, _ = m.group(0).split(",", 1)
         _, domain_name = domain.split("=", 1)
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR", "E026", self.dn, "GLUE2LocationDomainForeignKey", self.value[0]
         )
         self.assertTrue(domain_name == self.value[0], message)
@@ -288,7 +288,7 @@ class EGIProfileTest(unittest.TestCase):
         m = re.search(substring, self.dn)
         domain, _ = m.group(0).split(",", 1)
         _, domain_name = domain.split("=", 1)
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR", "E026", self.dn, "GLUE2ContactDomainForeignKey", self.value[0]
         )
         self.assertTrue(domain_name == self.value[0], message)
@@ -302,7 +302,7 @@ class EGIProfileTest(unittest.TestCase):
             m = re.search(substring, self.dn)
             domain, _ = m.group(0).split(",", 1)
             _, domain_name = domain.split("=", 1)
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "ERROR",
                 "E026",
                 self.dn,
@@ -314,7 +314,7 @@ class EGIProfileTest(unittest.TestCase):
     # ------------------------------------- GLUE2Location --------------------------------------------
 
     def test_GLUE2LocationLongitude_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR", "E008", self.dn, "GLUE2LocationLongitude", self.value[0]
         )
         self.assertTrue(
@@ -322,7 +322,7 @@ class EGIProfileTest(unittest.TestCase):
         )
 
     def test_GLUE2LocationLatitude_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR", "E009", self.dn, "GLUE2LocationLatitude", self.value[0]
         )
         self.assertTrue(
@@ -333,7 +333,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ServiceID_OK(self):
         status = re.match("^_", self.value[0])
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING", "W039", self.dn, "GLUE2ServiceID", self.value[0]
         )
         self.assertFalse(status, message)
@@ -364,7 +364,7 @@ class EGIProfileTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W005",
             self.dn,
@@ -377,31 +377,31 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(value, message)
 
     def test_GLUE2ComputingServiceRunningJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I014", self.dn, "GLUE2ComputingServiceRunningJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingServiceWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I015", self.dn, "GLUE2ComputingServiceWaitingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingServiceStagingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I016", self.dn, "GLUE2ComputingServiceStagingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingServiceSuspendedJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I017", self.dn, "GLUE2ComputingServiceSuspendedJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingServicePreLRMSWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I018",
             self.dn,
@@ -414,13 +414,13 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2EndpointID_OK(self):
         status = re.match("^_", self.value[0])
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING", "W040", self.dn, "GLUE2EndpointID", self.value[0]
         )
         self.assertFalse(status, message)
 
     def test_GLUE2EndpointImplementationVersion_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W041",
             self.dn,
@@ -438,12 +438,12 @@ class EGIProfileTest(unittest.TestCase):
             margin = datetime.timedelta(seconds=120)
             twoyears = datetime.timedelta(days=730)
             if creationtime.timetuple() > (now + margin).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "ERROR", "E010", self.dn, "GLUE2EndpointStartTime", self.value[0]
                 )
                 status = False
             elif creationtime.timetuple() < (now - twoyears).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING", "W006", self.dn, "GLUE2EndpointStartTime", self.value[0]
                 )
                 status = False
@@ -456,13 +456,13 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(status, message)
 
     def test_GLUE2EndpointIssuerCA_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I019", self.dn, "GLUE2EndpointIssuerCA", self.value[0]
         )
         self.assertTrue(self.value[0] != "unknown", message)
 
     def test_GLUE2EndpointTrustedCA_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I020", self.dn, "GLUE2EndpointTrustedCA", self.value[0]
         )
         self.assertTrue(self.value[0] != "unknown", message)
@@ -476,7 +476,7 @@ class EGIProfileTest(unittest.TestCase):
             margin = datetime.timedelta(seconds=120)
             year = datetime.timedelta(days=365)
             if creationtime.timetuple() > (now + margin).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "ERROR",
                     "E011",
                     self.dn,
@@ -485,7 +485,7 @@ class EGIProfileTest(unittest.TestCase):
                 )
                 status = False
             elif creationtime.timetuple() < (now - year).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING",
                     "W007",
                     self.dn,
@@ -502,7 +502,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(status, message)
 
     def test_GLUE2EndpointDowntimeAnnounce_checkStart(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING", "W008", self.dn, "GLUE2EndpointDowntimeAnnounce", self.value[0]
         )
         self.assertTrue("GLUE2EndpointDowntimeStart" in self.entry, message)
@@ -526,7 +526,7 @@ class EGIProfileTest(unittest.TestCase):
                     )
                 )
                 if starttime > endtime:
-                    message = validator.utils.message_generator(
+                    message = message_generator(
                         "ERROR",
                         "E012",
                         self.dn,
@@ -537,7 +537,7 @@ class EGIProfileTest(unittest.TestCase):
                     )
                     status = False
             elif starttime.timetuple() > (now + year).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING",
                     "W009",
                     self.dn,
@@ -546,7 +546,7 @@ class EGIProfileTest(unittest.TestCase):
                 )
                 status = False
             elif starttime.timetuple() < (now - year).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING",
                     "W010",
                     self.dn,
@@ -570,12 +570,12 @@ class EGIProfileTest(unittest.TestCase):
             year = datetime.timedelta(days=365)
             week = datetime.timedelta(days=7)
             if "GLUE2EndpointDowntimeStart" not in self.entry:
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "ERROR", "E013", self.dn, "GLUE2EndpointDowntimeEnd", self.value[0]
                 )
                 status = False
             elif endtime.timetuple() > (now + year).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING",
                     "W011",
                     self.dn,
@@ -584,7 +584,7 @@ class EGIProfileTest(unittest.TestCase):
                 )
                 status = False
             elif endtime.timetuple() < (now - week).timetuple():
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "WARNING",
                     "W012",
                     self.dn,
@@ -623,7 +623,7 @@ class EGIProfileTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W013",
             self.dn,
@@ -636,25 +636,25 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(value, message)
 
     def test_GLUE2ComputingEndpointRunningJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I021", self.dn, "GLUE2ComputingEndpointRunningJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingEndpointWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I022", self.dn, "GLUE2ComputingEndpointWaitingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingEndpointStagingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I023", self.dn, "GLUE2ComputingEndpointStagingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingEndpointSuspendedJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I024",
             self.dn,
@@ -664,7 +664,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingEndpointPreLRMSWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I025",
             self.dn,
@@ -676,13 +676,13 @@ class EGIProfileTest(unittest.TestCase):
     # ------------------------------------- GLUE2ComputingShare ---------------------------------------
 
     def test_GLUE2ComputingShareMaxWallTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I026", self.dn, "GLUE2ComputingShareMaxWallTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMaxMultiSlotWallTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I027",
             self.dn,
@@ -692,14 +692,14 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareDefaultWallTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I028", self.dn, "GLUE2ComputingShareDefaultWallTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMinWallTime_OK(self):
         if "GLUE2ComputingShareMaxWallTime" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W014",
                 self.dn,
@@ -716,7 +716,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareDefaultWallTime_MaxRange(self):
         if "GLUE2ComputingShareMaxWallTime" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W015",
                 self.dn,
@@ -733,7 +733,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareDefaultWallTime_MinRange(self):
         if "GLUE2ComputingShareMinWallTime" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W016",
                 self.dn,
@@ -749,26 +749,26 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareMaxCPUTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I029", self.dn, "GLUE2ComputingShareMaxCPUTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMaxTotalCPUTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I030", self.dn, "GLUE2ComputingShareMaxTotalCPUTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareDefaultCPUTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I031", self.dn, "GLUE2ComputingShareDefaultCPUTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMinCPUTime_OK(self):
         if "GLUE2ComputingShareMaxCPUTime" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W017",
                 self.dn,
@@ -785,7 +785,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareDefaultCPUTime_MaxRange(self):
         if "GLUE2ComputingShareMaxCPUTime" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W018",
                 self.dn,
@@ -802,7 +802,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareDefaultCPUTime_MinRange(self):
         if "GLUE2ComputingShareMinCPUTime" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W019",
                 self.dn,
@@ -818,20 +818,20 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareMaxTotalJobs_default(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I032", self.dn, "GLUE2ComputingShareMaxTotalJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMaxTotalJobs_zero(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING", "W020", self.dn, "GLUE2ComputingShareMaxTotalJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 0, message)
 
     def test_GLUE2ComputingShareMaxTotalJobs_MaxRunningJobs(self):
         if "GLUE2ComputingShareMaxRunningJobs" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W021",
                 self.dn,
@@ -848,7 +848,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareMaxTotalJobs_MaxWaitingJobs(self):
         if "GLUE2ComputingShareMaxWaitingJobs" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W021",
                 self.dn,
@@ -864,7 +864,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareMaxUserRunningJobs_zero(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W022",
             self.dn,
@@ -875,7 +875,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareMaxUserRunningJobs_OK(self):
         if "GLUE2ComputingShareMaxRunningJobs" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W023",
                 self.dn,
@@ -891,19 +891,19 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareMaxRunningJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I033", self.dn, "GLUE2ComputingShareMaxRunningJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMaxWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I034", self.dn, "GLUE2ComputingShareMaxWaitingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 999999999, message)
 
     def test_GLUE2ComputingShareMaxSlotsPerJob_zero(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W024",
             self.dn,
@@ -936,7 +936,7 @@ class EGIProfileTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W025",
             self.dn,
@@ -949,13 +949,13 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(value, message)
 
     def test_GLUE2ComputingShareRunningJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I035", self.dn, "GLUE2ComputingShareRunningJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareLocalRunningJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I036",
             self.dn,
@@ -965,19 +965,19 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I037", self.dn, "GLUE2ComputingShareWaitingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareWaitingJobs_default(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR", "E022", self.dn, "GLUE2ComputingShareWaitingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 444444, message)
 
     def test_GLUE2ComputingShareLocalWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I038",
             self.dn,
@@ -987,13 +987,13 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareSuspendedJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I039", self.dn, "GLUE2ComputingShareSuspendedJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareLocalSuspendedJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I040",
             self.dn,
@@ -1003,13 +1003,13 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareStagingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I041", self.dn, "GLUE2ComputingShareStagingJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingSharePreLRMSWaitingJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I042",
             self.dn,
@@ -1019,7 +1019,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareMaxMainMemory_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W026",
             self.dn,
@@ -1029,20 +1029,20 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) >= 100, message)
 
     def test_GLUE2ComputingShareMaxMainMemory_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I043", self.dn, "GLUE2ComputingShareMaxMainMemory", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 100000, message)
 
     def test_GLUE2ComputingShareMaxMainMemory_Default(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I096", self.dn, "GLUE2ComputingShareMaxMainMemory", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 444444, message)
 
     def test_GLUE2ComputingShareGuaranteedMainMemory_MinRange(self):
         if "GLUE2ComputingShareMaxMainMemory" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W027",
                 self.dn,
@@ -1058,7 +1058,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareGuaranteedMainMemory_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I044",
             self.dn,
@@ -1069,7 +1069,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareMaxVirtualMemory_MinRange(self):
         if "GLUE2ComputingShareMaxMainMemory" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W028",
                 self.dn,
@@ -1085,7 +1085,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareMaxVirtualMemory_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I045",
             self.dn,
@@ -1095,7 +1095,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 100000, message)
 
     def test_GLUE2ComputingShareMaxVirtualMemory_Default(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I097",
             self.dn,
@@ -1106,7 +1106,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingShareGuaranteedVirtualMemory_MinRange(self):
         if "GLUE2ComputingShareMaxVirtualMemory" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W029",
                 self.dn,
@@ -1122,7 +1122,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingShareGuaranteedVirtualMemory_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I046",
             self.dn,
@@ -1132,7 +1132,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 100000, message)
 
     def test_GLUE2ComputingShareEstimatedAverageWaitingTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I046",
             self.dn,
@@ -1142,7 +1142,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareEstimatedAverageWaitingTime_default(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR",
             "E023",
             self.dn,
@@ -1152,7 +1152,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) != 2146660842, message)
 
     def test_GLUE2ComputingShareEstimatedWorstWaitingTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I047",
             self.dn,
@@ -1162,7 +1162,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareEstimatedWorstWaitingTime_default(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR",
             "E024",
             self.dn,
@@ -1172,19 +1172,19 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) != 2146660842, message)
 
     def test_GLUE2ComputingShareFreeSlots_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I048", self.dn, "GLUE2ComputingShareFreeSlots", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareUsedSlots_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I049", self.dn, "GLUE2ComputingShareUsedSlots", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingShareRequestedSlots_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I050", self.dn, "GLUE2ComputingShareRequestedSlots", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
@@ -1192,7 +1192,7 @@ class EGIProfileTest(unittest.TestCase):
     # ------------------------------------- GLUE2ComputingManager ---------------------------------------
 
     def test_GLUE2ComputingManagerTotalLogicalCPUs_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I051",
             self.dn,
@@ -1202,7 +1202,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) >= 10, message)
 
     def test_GLUE2ComputingManagerTotalLogicalCPUs_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I052",
             self.dn,
@@ -1213,7 +1213,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingManagerTotalPhysicalCPUs_OK(self):
         if "GLUE2ComputingManagerTotalLogicalCPUs" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W030",
                 self.dn,
@@ -1229,7 +1229,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingManagerTotalPhysicalCPUs_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I053",
             self.dn,
@@ -1239,7 +1239,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) >= 10, message)
 
     def test_GLUE2ComputingManagerTotalPhysicalCPUs_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I054",
             self.dn,
@@ -1250,7 +1250,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingManagerTotalSlots_OK(self):
         if "GLUE2ComputingManagerTotalLogicalCPUs" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W031",
                 self.dn,
@@ -1266,20 +1266,20 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingManagerTotalSlots_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I055", self.dn, "GLUE2ComputingManagerTotalSlots", self.value[0]
         )
         self.assertTrue(int(self.value[0]) >= 10, message)
 
     def test_GLUE2ComputingManagerTotalSlots_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I056", self.dn, "GLUE2ComputingManagerTotalSlots", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingManagerSlotsUsedByLocalJobs_OK(self):
         if "GLUE2ComputingManagerTotalSlots" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W032",
                 self.dn,
@@ -1296,7 +1296,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ComputingManagerSlotsUsedByGridJobs_OK(self):
         if "GLUE2ComputingManagerTotalSlots" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "WARNING",
                 "W033",
                 self.dn,
@@ -1312,7 +1312,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ComputingManagerWorkingAreaTotal_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I057",
             self.dn,
@@ -1322,7 +1322,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingManagerWorkingAreaFree_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I058",
             self.dn,
@@ -1332,7 +1332,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingManagerWorkingAreaMultiSlotTotal_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I059",
             self.dn,
@@ -1342,7 +1342,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingManagerWorkingAreaMultiSlotFree_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I060",
             self.dn,
@@ -1352,13 +1352,13 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingManagerCacheTotal_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I061", self.dn, "GLUE2ComputingManagerCacheTotal", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ComputingManagerCacheFree_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I062", self.dn, "GLUE2ComputingManagerCacheTotal", self.value[0]
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
@@ -1369,7 +1369,7 @@ class EGIProfileTest(unittest.TestCase):
     # OS and Platform types that depend on sys admin are explicitely executed
     def test_GLUE2ExecutionEnvironmentPlatform_OK(self):
         status = self.types.is_Platform_t(self.value[0])
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W042",
             self.dn,
@@ -1381,7 +1381,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ExecutionEnvironmentOSFamily_OK(self):
         status = self.types.is_OSFamily_t(self.value[0])
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W043",
             self.dn,
@@ -1393,7 +1393,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ExecutionEnvironmentOSName_OK(self):
         status = self.types.is_OSName_t(self.value[0])
-        message = validator.utils.message_generator(
+        message = message_generator(
             "WARNING",
             "W044",
             self.dn,
@@ -1404,7 +1404,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(status, message)
 
     def test_GLUE2ExecutionEnvironmentTotalInstances_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I063",
             self.dn,
@@ -1414,7 +1414,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) >= 10, message)
 
     def test_GLUE2ExecutionEnvironmentTotalInstances_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I064",
             self.dn,
@@ -1425,7 +1425,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ExecutionEnvironmentUsedInstances_OK(self):
         if "GLUE2ExecutionEnvironmentTotalInstances" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "INFO",
                 "I065",
                 self.dn,
@@ -1442,7 +1442,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ExecutionEnvironmentUnavailableInstances_OK(self):
         if "GLUE2ExecutionEnvironmentTotalInstances" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "INFO",
                 "I066",
                 self.dn,
@@ -1458,7 +1458,7 @@ class EGIProfileTest(unittest.TestCase):
             )
 
     def test_GLUE2ExecutionEnvironmentPhysicalCPUs_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I067",
             self.dn,
@@ -1468,7 +1468,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) <= 10, message)
 
     def test_GLUE2ExecutionEnvironmentLogicalCPUs_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I068",
             self.dn,
@@ -1478,7 +1478,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000, message)
 
     def test_GLUE2ExecutionEnvironmentCPUClockSpeed_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I069",
             self.dn,
@@ -1488,7 +1488,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) <= 10000, message)
 
     def test_GLUE2ExecutionEnvironmentCPUClockSpeed_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I070",
             self.dn,
@@ -1498,7 +1498,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) >= 100, message)
 
     def test_GLUE2ExecutionEnvironmentCPUTimeScalingFactor_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I071",
             self.dn,
@@ -1508,7 +1508,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) <= 1, message)
 
     def test_GLUE2ExecutionEnvironmentCPUTimeScalingFactor_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I072",
             self.dn,
@@ -1518,7 +1518,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(float(self.value[0]) > 0.1, message)
 
     def test_GLUE2ExecutionEnvironmentWallTimeScalingFactor_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I073",
             self.dn,
@@ -1528,7 +1528,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) <= 1, message)
 
     def test_GLUE2ExecutionEnvironmentWallTimeScalingFactor_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I074",
             self.dn,
@@ -1538,7 +1538,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(float(self.value[0]) > 0.1, message)
 
     def test_GLUE2ExecutionEnvironmentMainMemorySize_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I075",
             self.dn,
@@ -1548,7 +1548,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ExecutionEnvironmentMainMemorySize_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I076",
             self.dn,
@@ -1558,7 +1558,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) >= 100, message)
 
     def test_GLUE2ExecutionEnvironmentVirtualMemorySize_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I077",
             self.dn,
@@ -1568,7 +1568,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
     def test_GLUE2ExecutionEnvironmentVirtualMemorySize_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I078",
             self.dn,
@@ -1585,7 +1585,7 @@ class EGIProfileTest(unittest.TestCase):
                 *(time.strptime(self.value[0], "%Y-%m-%dT%H:%M:%SZ")[0:6])
             )
             now = datetime.datetime.utcnow()
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "INFO",
                 "I079",
                 self.dn,
@@ -1598,7 +1598,7 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(removaldate.timetuple() < now.timetuple(), message)
 
     def test_GLUE2ApplicationEnvironmentMaxSlots_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I080",
             self.dn,
@@ -1608,13 +1608,13 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(int(self.value[0]) != 0, message)
 
     def test_GLUE2ApplicationEnvironmentMaxJobs_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I081", self.dn, "GLUE2ApplicationEnvironmentMaxJobs", self.value[0]
         )
         self.assertTrue(int(self.value[0]) != 0, message)
 
     def test_GLUE2ApplicationEnvironmentMaxUserSeats_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO",
             "I082",
             self.dn,
@@ -1625,7 +1625,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ApplicationEnvironmentFreeSlots_OK(self):
         if "GLUE2ApplicationEnvironmentMaxSlots" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "INFO",
                 "I083",
                 self.dn,
@@ -1642,7 +1642,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ApplicationEnvironmentFreeJobs_OK(self):
         if "GLUE2ApplicationEnvironmentMaxJobs" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "INFO",
                 "I084",
                 self.dn,
@@ -1659,7 +1659,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2ApplicationEnvironmentFreeUserSeats_OK(self):
         if "GLUE2ApplicationEnvironmentMaxUserSeats" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "INFO",
                 "I085",
                 self.dn,
@@ -1700,7 +1700,7 @@ class EGIProfileTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR",
             "E014",
             self.dn,
@@ -1718,7 +1718,7 @@ class EGIProfileTest(unittest.TestCase):
                 self.entry["GLUE2StorageServiceCapacityType"][0] == "online"
                 or self.entry["GLUE2StorageServiceCapacityType"][0] == "nearline"
             ):
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "INFO",
                     "I086",
                     self.dn,
@@ -1733,7 +1733,7 @@ class EGIProfileTest(unittest.TestCase):
                 self.entry["GLUE2StorageServiceCapacityType"][0] == "online"
                 or self.entry["GLUE2StorageServiceCapacityType"][0] == "nearline"
             ):
-                message = validator.utils.message_generator(
+                message = message_generator(
                     "INFO",
                     "I087",
                     self.dn,
@@ -1744,7 +1744,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2StorageServiceCapacityFreeSize_OK(self):
         if "GLUE2StorageServiceCapacityTotalSize" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "ERROR",
                 "E015",
                 self.dn,
@@ -1761,7 +1761,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2StorageServiceCapacityUsedSize_OK(self):
         if "GLUE2StorageServiceCapacityTotalSize" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "ERROR",
                 "E016",
                 self.dn,
@@ -1778,7 +1778,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2StorageServiceCapacityReservedSize_OK(self):
         if "GLUE2StorageServiceCapacityTotalSize" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "ERROR",
                 "E017",
                 self.dn,
@@ -1796,19 +1796,19 @@ class EGIProfileTest(unittest.TestCase):
     # ------------------------------------- GLUE2StorageShare ---------------------------------------
 
     def test_GLUE2StorageShareAccessLatency_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I088", self.dn, "GLUE2StorageShareAccessLatency", self.value[0]
         )
         self.assertTrue(self.value[0] != "offline", message)
 
     def test_GLUE2StorageShareDefaultLifeTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I089", self.dn, "GLUE2StorageShareDefaultLifeTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) >= 100000, message)
 
     def test_GLUE2StorageShareMaximumLifeTime_OK(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I090", self.dn, "GLUE2StorageShareMaximumLifeTime", self.value[0]
         )
         self.assertTrue(int(self.value[0]) >= 100000, message)
@@ -1848,7 +1848,7 @@ class EGIProfileTest(unittest.TestCase):
             high,
             total - int(self.value[0]),
         )
-        message = validator.utils.message_generator(
+        message = message_generator(
             "ERROR",
             "E018",
             self.dn,
@@ -1861,20 +1861,20 @@ class EGIProfileTest(unittest.TestCase):
         self.assertTrue(value, message)
 
     def test_GLUE2StorageShareCapacityTotalSize_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I091", self.dn, "GLUE2StorageShareCapacityTotalSize", self.value[0]
         )
         self.assertTrue(int(self.value[0]) >= 1000, message)
 
     def test_GLUE2StorageShareCapacityTotalSize_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I092", self.dn, "GLUE2StorageShareCapacityTotalSize", self.value[0]
         )
         self.assertTrue(int(self.value[0]) <= 1000000000, message)
 
     def test_GLUE2StorageShareCapacityFreeSize_OK(self):
         if "GLUE2StorageShareCapacityTotalSize" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "ERROR",
                 "E019",
                 self.dn,
@@ -1891,7 +1891,7 @@ class EGIProfileTest(unittest.TestCase):
 
     def test_GLUE2StorageShareCapacityUsedSize_OK(self):
         if "GLUE2StorageShareCapacityTotalSize" in self.entry:
-            message = validator.utils.message_generator(
+            message = message_generator(
                 "ERROR",
                 "E020",
                 self.dn,
@@ -1909,13 +1909,13 @@ class EGIProfileTest(unittest.TestCase):
     # ------------------------------------- GLUE2ToComputingService ---------------------------------------
 
     def test_GLUE2ToComputingServiceBandwidth_MinRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I093", self.dn, "GLUE2ToComputingServiceBandwidth", self.value[0]
         )
         self.assertTrue(int(self.value[0]) >= 100, message)
 
     def test_GLUE2ToComputingServiceBandwidth_MaxRange(self):
-        message = validator.utils.message_generator(
+        message = message_generator(
             "INFO", "I094", self.dn, "GLUE2ToComputingServiceBandwidth", self.value[0]
         )
         self.assertTrue(int(self.value[0]) <= 100000, message)

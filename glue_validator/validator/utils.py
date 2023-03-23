@@ -5,7 +5,7 @@ import signal
 import string
 import re
 import datetime
-import validator.messages
+import glue_validator.validator.messages
 
 
 def parse_options():
