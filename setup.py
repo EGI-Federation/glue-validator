@@ -13,7 +13,7 @@ setup(
     entry_points={
         "console_scripts": [
             "glue-validator=glue_validator.scripts.glue_validator:main",
-            "glue-schema-validator=glue_validator.scripts.glue_schema_validator:main"
+            "glue-schema-validator=glue_validator.scripts.glue_schema_validator:main",
         ],
     },
 )

@@ -10,9 +10,9 @@ import glue_validator.validator.messages
 
 def get_glue_version_class(glue_version):
     glue_version_map = {
-            "glue1": "glue_validator.glue1",
-            "glue2": "glue_validator.glue2",
-            "egi-glue2": "glue_validator.egi_glue2",
+        "glue1": "glue_validator.glue1",
+        "glue2": "glue_validator.glue2",
+        "egi-glue2": "glue_validator.egi_glue2",
     }
     return glue_version_map[glue_version]
 
@@ -327,7 +327,6 @@ def convert_entry(entry_string):
 
 
 def nagios_output(debug_level, file):
-
     config = parse_options()
     try:
         results = open(file, "r")
@@ -335,7 +334,6 @@ def nagios_output(debug_level, file):
         messages = {"INFO": [], "WARNING": [], "ERROR": []}
         summary = {}
         for line in results:
-
             # Process new error, warning or info block
             if (
                 line.find("INFO START:") > -1
@@ -350,7 +348,6 @@ def nagios_output(debug_level, file):
                         "AssertionError: %s START:" % match_string, " "
                     )
                     while extra_line.find("END") == -1:
-
                         # If separator is a newline, print the DN in different lines as well
                         if (
                             config["separator"] == "\n"
@@ -434,7 +431,6 @@ def nagios_output(debug_level, file):
 
 
 def message_generator(type, code, dn, attribute, value, extra_info=""):
-
     config = parse_options()
     separator = config["separator"]
     # separator = "\n"

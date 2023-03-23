@@ -17,7 +17,6 @@ def is_LocalID_t(value):
 
 
 def is_ObjectClass(value):
-
     if value in glue_validator.glue2.data.schema:
         return True
     else:

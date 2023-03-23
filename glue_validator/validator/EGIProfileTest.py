@@ -10,7 +10,6 @@ from glue_validator.validator.utils import message_generator
 
 class EGIProfileTest(unittest.TestCase):
     def __init__(self, test_name, entry, value, test_class):
-
         unittest.TestCase.__init__(self, test_name)
         self.entry = entry
         if "dn" in entry:
