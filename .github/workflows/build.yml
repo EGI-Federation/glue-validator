@@ -28,6 +28,7 @@ jobs:
           name: rpms7
           path: |
             build/RPMS/noarch/glue-validator-*-1.el7.noarch.rpm
+  # XXX: From EPEL: python3-ldap
   install-centos7:
     name: Install CentOS 7 RPMs
     needs: build-centos7
@@ -39,6 +40,7 @@ jobs:
           name: rpms7
       - name: Install generated RPMs
         run: |
+          yum install -y epel-release
           yum localinstall -y glue-validator-*.el7.noarch.rpm
 
   # Use a matrix for AlmaLinux versions
