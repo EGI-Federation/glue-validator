@@ -3,5 +3,5 @@ import sys
 
 import glue_validator.scripts.glue_validator
 
-if __name__ == '__main__':
-    sys.exit(glue_validator.scripts.glue_validator.main()) 
+if __name__ == "__main__":
+    sys.exit(glue_validator.scripts.glue_validator.main())
