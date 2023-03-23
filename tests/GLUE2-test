@@ -3,7 +3,7 @@
 script="../bin/glue-validator"
 output="$(mktemp)"
 failed=0
-export PYTHONPATH=../lib
+export PYTHONPATH="../:../lib"
 
 function test_ldif {
 	echo -n "Testing ${ldif} ... "
