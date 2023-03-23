@@ -29,6 +29,7 @@ The required build dependencies are:
 - make
 - rsync
 - python3
+- python3-ldap
 - python3-setuptools
 
 ```shell
