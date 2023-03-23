@@ -131,7 +131,7 @@ def parse_options():
     else:
         config["testsuite"] = "egi-profile"
 
-    if not "timeout" in config:
+    if "timeout" not in config:
         config["timeout"] = 10
     else:
         if config["timeout"].isdigit():
@@ -146,11 +146,12 @@ def parse_options():
         config["testsuite"] == "egi-profile"
     ):
         sys.stderr.write(
-            "Error: egi-profile testsuite must be executed against the egi-glue2 schema version.\n"
+            "Error: egi-profile testsuite must be executed against "
+            "the egi-glue2 schema version.\n"
         )
         usage()
         sys.exit(1)
-    if (config["separator"] != "\n" and not "verbosity" in config) or (
+    if (config["separator"] != "\n" and "verbosity" not in config) or (
         config["separator"] != "\n"
         and "verbosity" in config
         and config["verbosity"] != 3
@@ -185,14 +186,16 @@ File Mode: Obtains LDIF directly from a file
 Optional Arguments:
 
 GLUE version: Selects the GLUE schema version to be tested
- -g --glue-version        The glue schema version to be tested [glue1|glue2|egi-glue2 (default)]
+ -g --glue-version        The glue schema version to be tested
+                          [glue1|glue2|egi-glue2 (default)]
 
 Tesuite type: Selects the set of tests to be executed against the LDIF
  -s --testsuite     The testsuite  [general|lhcb|egi-profile (default)]
 
 Other Options:
- -k --exclude-known-issues  Do not run tests for wrongly published attributes due to known bugs
- -t --timeout               glue-validator runtime timeout, default 10s 
+ -k --exclude-known-issues  Do not run tests for wrongly published attributes
+                            due to known bugs
+ -t --timeout               glue-validator runtime timeout, default 10s
  -v --verbose               Verbosity level 0-3, default 0
  -r --separator             Defines the separator for the output messages, default \\n
                             This is only available for the verbosity level 3.
@@ -201,7 +204,7 @@ Other Options:
 
 Examples:
 
-  EGI profile against GLUE 2.0 validation: glue-validator -H localhost -p 2170 -b o=glue 
+  EGI profile against GLUE 2.0 validation: glue-validator -H localhost -p 2170 -b o=glue
   GLUE 1.3 validation: glue-validator -H localhost -p 2170 -b o=grid -g glue1 -s general
   GLUE 2.0 validation: glue-validator -H localhost -p 2170 -b o=glue -g glue2 -s general
 
@@ -347,7 +350,8 @@ def nagios_output(debug_level, file):
                         "AssertionError: %s START:" % match_string, " "
                     )
                     while extra_line.find("END") == -1:
-                        # If separator is a newline, print the DN in different lines as well
+                        # If separator is a newline, print the DN in different
+                        # lines as well
                         if (
                             config["separator"] == "\n"
                             and extra_line.find("Affected DN") > -1

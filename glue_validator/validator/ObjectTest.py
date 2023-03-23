@@ -153,10 +153,17 @@ class ObjectTest(unittest.TestCase):
                     "GLUE2ExecutionEnvironment missing",
                 )
                 status = False
-                # Known issue affecting DPM fixed in version 1.8.8 but still affecting many sites
-                # if  'GLUE2StorageServiceCapacity' in self.objects and 'GLUE2StorageService' not in self.objects:
-                #    message = message + message_generator("ERROR","E025","NA",'GLUE2StorageServiceCapacity published','GLUE2StorageService missing')
-                status = False
+                # Known issue affecting DPM fixed in version 1.8.8 but still affecting
+                # many sites
+                # if ('GLUE2StorageServiceCapacity' in self.objects
+                #     and 'GLUE2StorageService' not in self.objects):
+                #    message = message + message_generator(
+                #        "ERROR",
+                #        "E025",
+                #        "NA",
+                #        "GLUE2StorageServiceCapacity published",
+                #        "GLUE2StorageService missing")
+                #    status = False
             if (
                 "GLUE2StorageShareCapacity" in self.objects
                 and "GLUE2StorageShare" not in self.objects

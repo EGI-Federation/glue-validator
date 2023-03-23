@@ -42,23 +42,28 @@ def is_URI(value):
     return is_String(value)
     # RFC 3986: http://www.ietf.org/rfc/rfc3986.txt
     # Check URL (subtype of URI)
-    uri = "^[a-zA-Z][a-zA-Z0-9+-.]*://[a-zA-Z0-9_.]+(:[0-9]+)*(/[a-zA-Z0-9_]*)*(\?[a-zA-Z0-9+-:@?./]+)?(#[a-zA-Z0-9+-:#@?./]+)?$"
-    if re.match(uri, value):
-        return True
-    else:
-        # Check other URIs
-        uri = "^[a-zA-Z][a-zA-Z0-9+-.@:]*:[a-zA-Z0-9+-.@:]*$"
-        if re.match(uri, value):
-            return True
-        else:
-            return False
+    # uri = "^[a-zA-Z][a-zA-Z0-9+-.]*://[a-zA-Z0-9_.]+(:[0-9]+)*
+    #       (/[a-zA-Z0-9_]*)*(\?[a-zA-Z0-9+-:@?./]+)?(#[a-zA-Z0-9+-:#@?./]+)?$"
+    # if re.match(uri, value):
+    #     return True
+    # else:
+    #     # Check other URIs
+    #     uri = "^[a-zA-Z][a-zA-Z0-9+-.@:]*:[a-zA-Z0-9+-.@:]*$"
+    #     if re.match(uri, value):
+    #         return True
+    #     else:
+    #         return False
 
 
 def is_URL(value):
     # RFC 1738: http://www.ietf.org/rfc/rfc1738.txt
     # Protocols accepted: see is_allowed_URL_Schema
     # Protocols rejected on purpose: gopher|news|nntp|telnet|mailto|file|etc.
-    url = "(?:(?:([a-z0-9+.-]+)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%_\./-~-]*)?"
+    url = (
+        "(?:(?:([a-z0-9+.-]+)://)|(www\\.))+(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})"
+        "|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))"
+        "(/[a-zA-Z0-9\\&amp;%_\\./-~-]*)?"
+    )
     m = re.match(url, value)
     if m is None:
         return False
@@ -132,7 +137,10 @@ def is_UInt64(value):
 
 def is_DateTime_t(value):
     # Check http://www.w3.org/TR/xmlschema-2/#dateTime
-    dateTime = "^-?[0-9]{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])T([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z?$"
+    dateTime = (
+        "^-?[0-9]{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])"
+        "T([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z?$"
+    )
 
     if re.match(dateTime, value):
         return True
@@ -141,12 +149,10 @@ def is_DateTime_t(value):
 
 def is_Email_t(email):
     if len(email) > 7:
-        if (
-            re.match(
-                "mailto:[ ]*.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$",
-                email,
-            )
-            != None
+        if re.match(
+            "mailto:[ ]*.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\."
+            "([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$",
+            email,
         ):
             return True
     return False

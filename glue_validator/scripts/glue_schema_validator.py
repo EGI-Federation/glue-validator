@@ -5,9 +5,9 @@ import sys
 import tempfile
 import time
 
+import glue_validator.validator.utils
 import ldap
 import ldap.modlist as modlist
-import glue_validator.validator.utils
 
 
 def start_slapd():
@@ -32,7 +32,8 @@ def start_slapd():
 
     if not os.path.exists("/etc/ldap/schema/GLUE20.schema"):
         sys.stderr.write(
-            "Error: Could not find GLUE20.schema file, do you have glue-schema installed?\n"
+            "Error: Could not find GLUE20.schema file, "
+            "do you have glue-schema installed?\n"
         )
         sys.exit(1)
     config["tmp_dir"] = tempfile.mkdtemp()

@@ -113,7 +113,7 @@ def main():
                     and (
                         test_name not in glue_validator.validator.KnownIssues.test_list
                     )
-                ) or not "exclude-known-issues" in config:
+                ) or "exclude-known-issues" not in config:
                     suite.addTest(inst(test_name, entry, glue_version))
             module = sys.modules["glue_validator.validator.EGIProfileTest"]
             inst = getattr(module, "EGIProfileTest")
@@ -129,7 +129,7 @@ def main():
                             test_name
                             not in glue_validator.validator.KnownIssues.test_list
                         )
-                    ) or not "exclude-known-issues" in config:
+                    ) or "exclude-known-issues" not in config:
                         suite.addTest(
                             inst(test_name, entry, entry[attribute], glue_version)
                         )

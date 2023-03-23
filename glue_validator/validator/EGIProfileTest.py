@@ -7,9 +7,6 @@ import unittest
 from glue_validator.validator.utils import message_generator
 
 
-# ----------------------------------------------------------------------------------------------
-
-
 class EGIProfileTest(unittest.TestCase):
     def __init__(self, test_name, entry, value, test_class):
         unittest.TestCase.__init__(self, test_name)
@@ -23,7 +20,7 @@ class EGIProfileTest(unittest.TestCase):
 
         self.value = value
 
-    # ------------------------------------- GLUE2Entity --------------------------------------------
+    #  GLUE2Entity --------------------------------------------
 
     def test_GLUE2EntityCreationTime_OK(self):
         try:
@@ -273,7 +270,7 @@ class EGIProfileTest(unittest.TestCase):
             status = False
         self.assertTrue(status, message)
 
-    # ------------------------------------- Domain Foreign Key --------------------------------------------
+    #  Domain Foreign Key --------------------------------------------
 
     def test_GLUE2LocationDomainForeignKey_OK(self):
         substring = "GLUE2DomainID=.*,"
@@ -313,7 +310,7 @@ class EGIProfileTest(unittest.TestCase):
             )
             self.assertTrue(domain_name == self.value[0], message)
 
-    # ------------------------------------- GLUE2Location --------------------------------------------
+    #  GLUE2Location --------------------------------------------
 
     def test_GLUE2LocationLongitude_OK(self):
         message = message_generator(
@@ -331,7 +328,7 @@ class EGIProfileTest(unittest.TestCase):
             float(self.value[0]) > -90 and float(self.value[0]) < 90, message
         )
 
-    # ------------------------------------- GLUE2Service -----------------------------------------------
+    #  GLUE2Service -----------------------------------------------
 
     def test_GLUE2ServiceID_OK(self):
         status = re.match("^_", self.value[0])
@@ -340,7 +337,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertFalse(status, message)
 
-    # ------------------------------------- GLUE2ComputingService ---------------------------------------
+    #  GLUE2ComputingService ---------------------------------------
 
     def test_GLUE2ComputingServiceTotalJobs_OK(self):
         total = 0
@@ -412,7 +409,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
-    # ------------------------------------- GLUE2Endpoint ---------------------------------------
+    #  GLUE2Endpoint ---------------------------------------
 
     def test_GLUE2EndpointID_OK(self):
         status = re.match("^_", self.value[0])
@@ -599,7 +596,7 @@ class EGIProfileTest(unittest.TestCase):
             status = True
         self.assertTrue(status, message)
 
-    # ------------------------------------- GLUE2ComputingEndpoint ---------------------------------------
+    #  GLUE2ComputingEndpoint ---------------------------------------
 
     def test_GLUE2ComputingEndpointTotalJobs_OK(self):
         total = 0
@@ -675,7 +672,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
-    # ------------------------------------- GLUE2ComputingShare ---------------------------------------
+    #  GLUE2ComputingShare ---------------------------------------
 
     def test_GLUE2ComputingShareMaxWallTime_OK(self):
         message = message_generator(
@@ -1191,7 +1188,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
-    # ------------------------------------- GLUE2ComputingManager ---------------------------------------
+    #  GLUE2ComputingManager ---------------------------------------
 
     def test_GLUE2ComputingManagerTotalLogicalCPUs_MinRange(self):
         message = message_generator(
@@ -1365,7 +1362,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertTrue(int(self.value[0]) < 1000000, message)
 
-    # ------------------------------------- GLUE2ExecutionEnvironment ---------------------------------------
+    #  GLUE2ExecutionEnvironment ---------------------------------------
 
     # Until info providers fix types, the general type checking is in "Known Issues"
     # OS and Platform types that depend on sys admin are explicitely executed
@@ -1579,7 +1576,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertTrue(int(self.value[0]) >= 100, message)
 
-    # ------------------------------------- GLUE2ApplicationEnvironment ---------------------------------------
+    #  GLUE2ApplicationEnvironment ---------------------------------------
 
     def test_GLUE2ApplicationEnvironmentRemovalDate_OK(self):
         try:
@@ -1596,7 +1593,6 @@ class EGIProfileTest(unittest.TestCase):
             )
         except ValueError:
             message = ""
-            status = True
         self.assertTrue(removaldate.timetuple() < now.timetuple(), message)
 
     def test_GLUE2ApplicationEnvironmentMaxSlots_OK(self):
@@ -1676,7 +1672,7 @@ class EGIProfileTest(unittest.TestCase):
                 message,
             )
 
-    # ------------------------------------- GLUE2StorageServiceCapacity ---------------------------------------
+    #  GLUE2StorageServiceCapacity ---------------------------------------
 
     def test_GLUE2StorageServiceCapacityTotalSize_OK(self):
         total = 0
@@ -1795,7 +1791,7 @@ class EGIProfileTest(unittest.TestCase):
                 message,
             )
 
-    # ------------------------------------- GLUE2StorageShare ---------------------------------------
+    #  GLUE2StorageShare ---------------------------------------
 
     def test_GLUE2StorageShareAccessLatency_OK(self):
         message = message_generator(
@@ -1815,7 +1811,7 @@ class EGIProfileTest(unittest.TestCase):
         )
         self.assertTrue(int(self.value[0]) >= 100000, message)
 
-    # ------------------------------------- GLUE2StorageShareCapacity ---------------------------------------
+    #  GLUE2StorageShareCapacity ---------------------------------------
 
     def test_GLUE2StorageShareCapacityTotalSize_OK(self):
         total = 0
@@ -1908,7 +1904,7 @@ class EGIProfileTest(unittest.TestCase):
                 message,
             )
 
-    # ------------------------------------- GLUE2ToComputingService ---------------------------------------
+    #  GLUE2ToComputingService ---------------------------------------
 
     def test_GLUE2ToComputingServiceBandwidth_MinRange(self):
         message = message_generator(
