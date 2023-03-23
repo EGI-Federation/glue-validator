@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - name: Run tests
         run: |
-          yum install -y python3
+          yum install -y python3 openldap-clients
           cd tests/
           ./GLUE2-test
 
