@@ -5,10 +5,9 @@ import sys
 import tempfile
 import time
 
+import glue_validator.validator.utils
 import ldap
 import ldap.modlist as modlist
-
-import glue_validator.validator.utils
 
 
 def start_slapd():
