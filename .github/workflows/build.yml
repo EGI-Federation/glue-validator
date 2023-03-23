@@ -42,6 +42,7 @@ jobs:
           yum localinstall -y glue-validator-*.el7.noarch.rpm
       - name: Test installed RPMs
         run: |
+          # yamllint disable-line rule:line-length
           curl https://repository.egi.eu/sw/production/cas/1/current/repo-files/EGI-trustanchors.repo > /etc/yum.repos.d/EGI-trustanchors.repo
           yum install -y ca-policy-egi-core
           mkdir -p /etc/glite
