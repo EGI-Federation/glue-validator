@@ -15,6 +15,8 @@ On RHEL-based systems, it's possible to install packages from
 repository, and tested to work with other components part of the Unified
 Middleware Distribution.
 
+> On CentOS 7, python3 dependencies are in [EPEL](https://docs.fedoraproject.org/en-US/epel/).
+
 ## Building packages
 
 The [Makefile](Makefile) allows building source tarball and packages.
