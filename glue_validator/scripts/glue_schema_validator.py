@@ -14,6 +14,7 @@ import validator.utils
 
 
 def start_slapd():
+    global config
     print("Starting slapd server.")
     # Set up Signal handler for SIGTERM (kill -15) and SIGINT (ctrl-c)
     signal.signal(signal.SIGTERM, handler)
@@ -126,12 +127,13 @@ def test_ldif(entry):
         connect.result()
         return True
     except Exception as e:
-        message = "Error: %s\n%s\n%s\n\n" % (dn, e[0]["desc"], e[0]["info"])
+        message = "Error: %s\n%s\n\n" % (dn, e)
         sys.stderr.write(message)
         return False
 
 
 def main():
+    global config
     config = glue_validator.validator.utils.parse_options()
     log = logging.getLogger(sys.argv[0])
     hdlr = logging.StreamHandler(sys.stderr)
