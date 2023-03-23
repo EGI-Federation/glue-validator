@@ -1,21 +1,20 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import logging
-import unittest
 import os
 import sys
 import tempfile
-import validator.utils
-import validator.EntryTest
-import validator.ObjectTest
-import validator.WLCGTest
-import validator.lhcbTest
-import validator.EGIProfileTest
-import validator.KnownIssues
+import unittest
 
+import validator.EGIProfileTest
+import validator.EntryTest
+import validator.KnownIssues
+import validator.lhcbTest
+import validator.ObjectTest
+import validator.utils
+import validator.WLCGTest
 
 if __name__ == "__main__":
-
     config = validator.utils.parse_options()
     log = logging.getLogger(sys.argv[0])
     hdlr = logging.StreamHandler(sys.stderr)

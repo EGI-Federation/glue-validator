@@ -1,19 +1,19 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import os
-import sys
-import ldap
-import time
-import validator.utils
-import tempfile
-import signal
 import logging
+import os
+import signal
 import string
+import sys
+import tempfile
+import time
+
+import ldap
 import ldap.modlist as modlist
+import validator.utils
 
 
 def start_slapd():
-
     print("Starting slapd server.")
     # Set up Signal handler for SIGTERM (kill -15) and SIGINT (ctrl-c)
     signal.signal(signal.SIGTERM, handler)
