@@ -1,6 +1,7 @@
-# glue-validator
+# The GLUE validator
 
-A validation framework for Grid information providers.
+A validation framework for Grid information providers. This framework validates the
+information return against the GLUE information model from the Open Grid Forum.
 
 BDII documentation is available at
 [gridinfo documentation site](https://gridinfo-documentation.readthedocs.io/).
