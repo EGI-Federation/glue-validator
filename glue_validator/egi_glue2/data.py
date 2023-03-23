@@ -138,7 +138,7 @@ schema = {
         "GLUE2ComputingEndpointStagingJobs": ("UInt32", True, "Optional"),
         "GLUE2ComputingEndpointSuspendedJobs": ("UInt32", True, "Optional"),
         "GLUE2ComputingEndpointPreLRMSWaitingJobs": ("UInt32", True, "Optional"),
-        # 'GLUE2ComputingEndpointComputingServiceForeignKey' : ('URI', True, 'Optional'),
+        # 'GLUE2ComputingEndpointComputingServiceForeignKey': ('URI', True, 'Optional'),
     },
     "GLUE2ComputingShare": {
         "GLUE2ComputingShareMappingQueue": ("String", True, "Recommended"),

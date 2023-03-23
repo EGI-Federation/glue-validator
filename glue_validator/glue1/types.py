@@ -1,6 +1,6 @@
 import re
-import glue_validator.glue1.data
 
+import glue_validator.glue1.data
 
 MAX_INT32 = 2**31 - 1
 MAX_INT64 = 2**63 - 1

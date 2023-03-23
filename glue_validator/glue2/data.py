@@ -137,7 +137,7 @@ schema = {
         "GLUE2ComputingEndpointStagingJobs": ("UInt32", True, False),
         "GLUE2ComputingEndpointSuspendedJobs": ("UInt32", True, False),
         "GLUE2ComputingEndpointPreLRMSWaitingJobs": ("UInt32", True, False),
-        #'GLUE2ComputingEndpointComputingServiceForeignKey' : ('URI', True, True),
+        # 'GLUE2ComputingEndpointComputingServiceForeignKey': ('URI', True, True),
     },
     "GLUE2ComputingShare": {
         "GLUE2ComputingShareMappingQueue": ("String", True, False),
@@ -399,7 +399,7 @@ schema = {
         "GLUE2ToComputingServiceComputingServiceForeignKey": ("URI", True, True),
     },
     "GLUE2StorageEndpoint": {
-        #'GLUE2StorageEndpointStorageServiceForeignKey' : ('URI', True, True),
+        # 'GLUE2StorageEndpointStorageServiceForeignKey': ('URI', True, True),
     },
     "GLUE2StorageManager": {
         "GLUE2StorageManagerStorageServiceForeignKey": ("URI", True, True),

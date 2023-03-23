@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import re
 import unittest
-import glue2.EntryTest
 
-EntryTest = glue2.EntryTest.EntryTest
+import glue_validator.glue2.EntryTest
+
+EntryTest = glue_validator.glue2.EntryTest.EntryTest
 
 
 class EntityTest(unittest.TestCase):

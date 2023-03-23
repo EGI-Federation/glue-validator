@@ -1,10 +1,9 @@
-import os
-import sys
 import getopt
-import signal
-import string
+import os
 import re
-import datetime
+import signal
+import sys
+
 import glue_validator.validator.messages
 
 
@@ -404,8 +403,8 @@ def nagios_output(debug_level, file):
                 "%s - %s (%s): "
                 % (
                     i,
-                    validator.messages.messages[i][0],
-                    validator.messages.messages[i][1],
+                    glue_validator.validator.messages.messages[i][0],
+                    glue_validator.validator.messages.messages[i][1],
                 )
             )
             sys.stdout.write("%i\n" % summary[i])
@@ -444,7 +443,7 @@ def message_generator(type, code, dn, attribute, value, extra_info=""):
         type,
         separator,
         code,
-        validator.messages.messages[code][0],
+        glue_validator.validator.messages.messages[code][0],
         separator,
         code,
         dn,

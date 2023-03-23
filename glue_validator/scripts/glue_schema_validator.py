@@ -1,14 +1,13 @@
 import logging
 import os
 import signal
-import string
 import sys
 import tempfile
 import time
 
 import ldap
 import ldap.modlist as modlist
-import validator.utils
+import glue_validator.validator.utils
 
 
 def start_slapd():
@@ -18,7 +17,6 @@ def start_slapd():
     signal.signal(signal.SIGTERM, handler)
     signal.signal(signal.SIGINT, handler)
 
-    process_pid = os.getpid()
     core = None
     backend = ""
     if os.path.exists("/etc/openldap/schema/core.schema"):
@@ -82,7 +80,7 @@ directory       """
             + config["tmp_dir"]
             + "/slapd.conf -h ldap://localhost:21700"
         )
-        response = os.system(command)
+        os.system(command)
         time.sleep(1)
         if not os.path.exists(config["tmp_dir"] + "/slapd.pid"):
             sys.stderr.write("Error: Could not start slapd.\n")
@@ -149,7 +147,7 @@ def main():
     dns = glue_validator.validator.utils.get_dns(ldif)
 
     ordered_dns = dns.keys()
-    ordered_dns.sort(lambda x, y: cmp(len(x), len(y)))
+    ordered_dns.sort(key=lambda x: len(x))
     start_slapd()
 
     defaults = {

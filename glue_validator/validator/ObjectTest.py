@@ -1,4 +1,5 @@
 import unittest
+
 from glue_validator.validator.utils import message_generator
 
 

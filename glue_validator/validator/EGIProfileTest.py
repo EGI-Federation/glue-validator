@@ -1,9 +1,11 @@
+import datetime
 import importlib
 import re
-import unittest
-import datetime
 import time
+import unittest
+
 from glue_validator.validator.utils import message_generator
+
 
 # ----------------------------------------------------------------------------------------------
 
