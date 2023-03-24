@@ -1,0 +1,41 @@
+---
+name: Run tests
+
+on:
+  pull_request:
+
+jobs:
+  # XXX done outside of the matrix due to different container name
+  # XXX: From EPEL: python3-ldap
+  test-centos7:
+    name: Run tests on CentOS 7
+    runs-on: ubuntu-latest
+    container: quay.io/centos/centos:7
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Run tests
+        run: |
+          yum install -y epel-release
+          yum install -y python3 python3-ldap
+          cd tests/
+          ./GLUE2-test
+
+  # Use a matrix for AlmaLinux versions
+  test:
+    strategy:
+      matrix:
+        almalinux-version: [8, 9]
+    name: Run tests on AlmaLinux ${{ matrix.almalinux-version }}
+    runs-on: ubuntu-latest
+    container: almalinux:${{ matrix.almalinux-version }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Run tests
+        run: |
+          yum install -y python3 python3-ldap
+          cd tests/
+          ./GLUE2-test

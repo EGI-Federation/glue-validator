@@ -1,26 +1,24 @@
 Name: glue-validator
-Version: 2.0.25
-Release: 0%{?dist}
+Version: 2.1.0
+Release: 1%{?dist}
 Summary: A validation framework for Grid information providers
 Group: Development/Libraries
 License: ASL 2.0
 URL: https://github.com/EGI-Federation/glue-validator
 Source: %{name}-%{version}.tar.gz
-
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: rsync
 BuildRequires: make
-BuildRequires: python
-BuildRequires: python-setuptools
-BuildRequires: python-rpm-macros
+BuildRequires: python3
+BuildRequires: python3-setuptools
+BuildRequires: python3-rpm-macros
 Requires: openldap-clients
-Requires: python
+Requires: python3
+Requires: python3-ldap
 
 %description
-A validation framework for Grid information providers. 
-This framework validates the information return against the GLUE information 
-model from the Open Grid Forum. 
+A validation framework for Grid information providers
 
 %prep
 %setup -q
@@ -29,14 +27,14 @@ model from the Open Grid Forum.
 
 %install
 rm -rf %{buildroot}
-make install python=python prefix=%{buildroot}
+make install python=python3 prefix=%{buildroot}
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{python_sitelib}/*
+%{python3_sitelib}/*
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1.gz
 %doc %{_docdir}/%{name}-%{version}/README.md
@@ -45,6 +43,11 @@ rm -rf %{buildroot}
 %license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
+* Fri Mar 17 2023 Baptiste Grenier <baptiste.grenier@egi.eu> - 2.1.0-1
+- Switch to python3. (#7) (Enol Fernandez)
+- Fix tests. (#7) (Enol Fernandez)
+- Build and release packages using AlmaLinux 8 and 9. (#7) (Baptiste Grenier)
+
 * Fri Oct 03 2014 Maria Alandes <maria.alandes.pradillo@cern.ch> - 2.0.25-0
 - # GRIDINFO-58: Workaround for StoRM in the Domain Foreign Keys Test
 - Fix help examples that were not correct

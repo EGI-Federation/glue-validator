@@ -1,1 +1,5 @@
 build/
+**/__pycache__/*.pyc
+.venv
+.envrc
+.python-version
