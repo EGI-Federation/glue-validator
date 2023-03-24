@@ -7,7 +7,7 @@ export PYTHONPATH="../:../lib"
 
 function test_ldif {
 	echo -n "Testing ${ldif} ... "
-	if ! ${script} -f "$1" >"${output}" 2>"${output}.err"; then
+	if ! ${script} -v 3 -f "$1" >"${output}" 2>"${output}.err"; then
 		echo "FAIL" 1>&2
 		cat "${output}"
 		cat "${output}.err"
@@ -20,7 +20,7 @@ function test_ldif {
 	#   cat ${output}.err
 	#   return
 	# fi
-	if ! grep "$2" "${output}.err" >/dev/null 2>&1; then
+        if [ -s "${output}.err" ]; then
 		echo "FAIL" 1>&2
 		cat "${output}.err"
 		failed=1
@@ -30,18 +30,16 @@ function test_ldif {
 }
 
 ldif="ldif/GLUE2AdminDomain/AdminDomain.ldif"
-message="The field GLUE2DomainId with value"
-test_ldif "${ldif}" "${message}"
+test_ldif "${ldif}"
 
 ldif="ldif/GLUE2Location/Location.ldif"
-message="^"
-test_ldif "${ldif}" "${message}"
+test_ldif "${ldif}"
 
 ldif="ldif/GLUE2Contact/Contact.ldif"
-message="^"
-test_ldif "${ldif}" "${message}"
+test_ldif "${ldif}"
 
 rm -f "${output}"
+rm -f "${output}.err"
 
 if [ "$failed" = "1" ]; then
 	echo "Error when running the tests"
