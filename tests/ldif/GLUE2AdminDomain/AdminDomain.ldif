@@ -1,7 +1,7 @@
 dn: GLUE2DomainId=mysite.com,o=GLUE
 objectClass: GLUE2Domain
 objectClass: GLUE2AdminDomain
-GLUE2DomainId: mysite.com
+GLUE2DomainID: mysite.com
 GLUE2DomainDescription: Example Grid Site
 GLUE2DomainWWW: http://mysite.com
 GLUE2AdminDomainDistributed: FALSE

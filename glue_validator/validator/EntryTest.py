@@ -54,7 +54,7 @@ class EntryTest(unittest.TestCase):
                         )
                         status = False
                     elif (
-                        self.test_class != "egi-glue2"
+                        self.test_class != "glue_validator.egi_glue2"
                         and self.schema[obj][attribute][2]
                         and attribute not in self.entry
                     ):

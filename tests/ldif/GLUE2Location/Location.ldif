@@ -1,6 +1,6 @@
 dn: GLUE2LocationId=location.mysite.com,GLUE2DomainId=mysite.com,o=GLUE
 objectClass: GLUE2Location
-GLUE2LocationId: location.mysite.com
+GLUE2LocationID: location.mysite.com
 GLUE2LocationAddress: 15700 103rd St. Suite 210 Lemont, IL  60439  USA
 GLUE2LocationPlace: Lemont
 GLUE2LocationCountry: US
