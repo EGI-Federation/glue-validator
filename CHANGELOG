@@ -12,7 +12,14 @@ and this project adheres to
 
 ### Changed
 
+- Switch to python3. (#7) (Enol Fernandez)
 - Build and release packages using AlmaLinux 8 and 9. (#7) (Baptiste Grenier)
+
+### Fixed
+
+- Fix tests. (#7) (Enol Fernandez)
+
+### Changed
 
 ## [2.0.25] - 2014-10-03
 

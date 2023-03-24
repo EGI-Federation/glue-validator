@@ -44,6 +44,8 @@ rm -rf %{buildroot}
 
 %changelog
 * Fri Mar 17 2023 Baptiste Grenier <baptiste.grenier@egi.eu> - 2.1.0-1
+- Switch to python3. (#7) (Enol Fernandez)
+- Fix tests. (#7) (Enol Fernandez)
 - Build and release packages using AlmaLinux 8 and 9. (#7) (Baptiste Grenier)
 
 * Fri Oct 03 2014 Maria Alandes <maria.alandes.pradillo@cern.ch> - 2.0.25-0
